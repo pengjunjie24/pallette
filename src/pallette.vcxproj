@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7CDC41EC-1BB4-4260-BB94-AD99D2C77E24}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <IncludePath>D:\code\visual_studio\usr\include\c++\5.4.0;D:\code\visual_studio\usr\include\x86_64-linux-gnu\c++\5.4.0;D:\code\visual_studio\usr\include\c++\5.4.0\backward;D:\code\visual_studio\usr\lib\gcc\x86_64-linux-gnu\5.4.0\include;D:\code\visual_studio\usr\local\include;D:\code\visual_studio\usr\include;D:\code\visual_studio\usr\include\x86_64-linux-gnu;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="base\AsyncLogging.cpp" />
+    <ClCompile Include="base\Channel.cpp" />
+    <ClCompile Include="base\CountDownLatch.cpp" />
+    <ClCompile Include="base\EpollPoller.cpp" />
+    <ClCompile Include="base\EventLoop.cpp" />
+    <ClCompile Include="base\FileUtil.cpp" />
+    <ClCompile Include="base\LogFile.cpp" />
+    <ClCompile Include="base\Logging.cpp" />
+    <ClCompile Include="base\LogStream.cpp" />
+    <ClCompile Include="base\ProcessInfo.cpp" />
+    <ClCompile Include="base\test\AsyncLoggingTest.cpp" />
+    <ClCompile Include="base\test\LoggingTest.cpp" />
+    <ClCompile Include="base\test\LogStreamTest.cpp" />
+    <ClCompile Include="base\test\ThreadPoolTest.cpp" />
+    <ClCompile Include="base\ThreadPool.cpp" />
+    <ClCompile Include="base\Timestamp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="base\any.hpp" />
+    <ClInclude Include="base\AsyncLogging.h" />
+    <ClInclude Include="base\Channel.h" />
+    <ClInclude Include="base\CountDownLatch.h" />
+    <ClInclude Include="base\EpollPoller.h" />
+    <ClInclude Include="base\EventLoop.h" />
+    <ClInclude Include="base\FileUtil.h" />
+    <ClInclude Include="base\LogFile.h" />
+    <ClInclude Include="base\Logging.h" />
+    <ClInclude Include="base\LogStream.h" />
+    <ClInclude Include="base\noncopyable.h" />
+    <ClInclude Include="base\operators.hpp" />
+    <ClInclude Include="base\ProcessInfo.h" />
+    <ClInclude Include="base\ThreadPool.h" />
+    <ClInclude Include="base\Timestamp.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
