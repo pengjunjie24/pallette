@@ -2,6 +2,7 @@
 #define PALLETTE_ANY_HPP
 
 #include <typeinfo>
+#include <algorithm>
 
 namespace pallette
 {

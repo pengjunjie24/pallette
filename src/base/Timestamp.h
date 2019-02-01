@@ -30,7 +30,7 @@ namespace pallette
         }
 
 
-        bool vaild() const { return microSeconds_; }
+        bool vaild() const { return microSeconds_ > 0; }
         int64_t getMicroSeconds() const { return microSeconds_; }
         void swap(Timestamp& that) { std::swap(microSeconds_, that.microSeconds_); }
         time_t getSeconds() const

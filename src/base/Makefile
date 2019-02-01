@@ -9,7 +9,7 @@ OBJ = $(filter-out $(filter %_$(second).o, $(TMP_OBJ)), $(TMP_OBJ))
 
 CC = g++
 #INCLUDES = -I./include
-CFLAGS = -Wall -Wextra -Werror -std=c++11 -DNDEBUG -g
+CFLAGS = -Wall -Wextra -Werror -std=c++11 -g
 RM = rm
 MAKE = make
 

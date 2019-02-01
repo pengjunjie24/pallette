@@ -11,6 +11,7 @@
 #include "Logging.h"
 #include "Channel.h"
 #include "EpollPoller.h"
+#include "TimerQueue.h"
 
 #include <signal.h>
 #include <sys/eventfd.h>
@@ -42,7 +43,6 @@ namespace
 		IgnoreSigPipe()
 		{
 			::signal(SIGPIPE, SIG_IGN);
-			// LOG_TRACE << "Ignore SIGPIPE";
 		}
 	};
 
@@ -57,6 +57,7 @@ EventLoop::EventLoop()
 	iteration_(0),
 	threadId_(process_info::tid()),
 	poller_(new EpollPoller(this)),
+	timerQueue_(new TimerQueue(this)),
 	wakeupFd_(CreateEventFd()),
 	wakeupChannel_(new Channel(this, wakeupFd_)),
 	currentActiveChannel_(NULL)
@@ -157,6 +158,23 @@ size_t EventLoop::queueSize() const
 {
 	std::unique_lock<std::mutex> lock(mutex_);
 	return pendingFunctors_.size();
+}
+
+TimerId EventLoop::runAfter(double delay, TimerCallback cb)
+{
+	Timestamp time(addTime(Timestamp::now(), delay));
+	return timerQueue_->addTimer(std::move(cb), time, 0.0);
+}
+
+TimerId EventLoop::runEvery(double interval, TimerCallback cb)
+{
+	Timestamp time(addTime(Timestamp::now(), interval));
+	return timerQueue_->addTimer(std::move(cb), time, interval);
+}
+
+void EventLoop::cancel(TimerId timerId)
+{
+	return timerQueue_->cancel(timerId);
 }
 
 void EventLoop::wakeup()

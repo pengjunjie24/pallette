@@ -15,7 +15,55 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="base\test\AsyncLoggingTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\EventLoopTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\LoggingTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\LogStreamTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\ThreadPoolTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\Acceptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="base\AsyncLogging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\Buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\Channel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\CountDownLatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\EpollPoller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\EventLoop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\EventLoopThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\EventLoopThreadPool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\FileUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\InetAddress.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\LogFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="base\Logging.cpp">
@@ -24,48 +72,84 @@
     <ClCompile Include="base\LogStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\Timestamp.cpp">
+    <ClCompile Include="base\ProcessInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\test\LogStreamTest.cpp">
+    <ClCompile Include="base\Socket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\test\LoggingTest.cpp">
+    <ClCompile Include="base\SocketsOperations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="base\ThreadPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\test\ThreadPoolTest.cpp">
+    <ClCompile Include="base\Timestamp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\CountDownLatch.cpp">
+    <ClCompile Include="base\TcpConnection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\LogFile.cpp">
+    <ClCompile Include="base\TcpServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\FileUtil.cpp">
+    <ClCompile Include="base\Connector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\ProcessInfo.cpp">
+    <ClCompile Include="base\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\test\AsyncLoggingTest.cpp">
+    <ClCompile Include="base\TimerQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\EventLoop.cpp">
+    <ClCompile Include="base\test\TimerQueueTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\Channel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="base\EpollPoller.cpp">
+    <ClCompile Include="base\TcpClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="base\Acceptor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\any.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="base\AsyncLogging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Channel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\CountDownLatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Endian.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\EpollPoller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\EventLoop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\EventLoopThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\EventLoopThreadPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\FileUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\InetAddress.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\LogFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\Logging.h">
@@ -77,37 +161,49 @@
     <ClInclude Include="base\noncopyable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base\Timestamp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="base\operators.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="base\ThreadPool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="base\CountDownLatch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="base\LogFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="base\FileUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\ProcessInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base\EventLoop.h">
+    <ClInclude Include="base\Socket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base\Channel.h">
+    <ClInclude Include="base\SocketsOperations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base\EpollPoller.h">
+    <ClInclude Include="base\ThreadPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base\any.hpp">
+    <ClInclude Include="base\Timestamp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\TcpConnection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Callbacks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\WeakCallback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\TcpServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Connector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\TimerQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\TimerId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\TcpClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

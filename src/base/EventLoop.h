@@ -12,6 +12,8 @@
 #include "Timestamp.h"
 #include "any.hpp"
 #include "ProcessInfo.h"
+#include "TimerId.h"
+#include "Callbacks.h"
 
 #include<atomic>
 #include <memory>
@@ -22,6 +24,7 @@ namespace pallette
 {
     class Channel;
     class EpollPoller;
+	class TimerQueue;
 
     class EventLoop : noncopyable
     {
@@ -40,6 +43,10 @@ namespace pallette
         void runInLoop(Functor cb);
         void queueInLoop(Functor cb);
         size_t queueSize() const;
+
+		TimerId runAfter(double delay, TimerCallback cb);
+		TimerId runEvery(double interval, TimerCallback cb);
+		void cancel(TimerId timerId);
 
         void wakeup();
         void updateChannel(Channel* channel);
@@ -71,6 +78,7 @@ namespace pallette
         const size_t threadId_;
         Timestamp pollReturnTime_;
         std::unique_ptr<EpollPoller> poller_;
+		std::unique_ptr<TimerQueue> timerQueue_;
         int wakeupFd_;
         std::unique_ptr<Channel> wakeupChannel_;
         any context_;

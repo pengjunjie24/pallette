@@ -10,6 +10,73 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="base\Acceptor.cpp" />
+    <ClCompile Include="base\AsyncLogging.cpp" />
+    <ClCompile Include="base\Buffer.cpp" />
+    <ClCompile Include="base\Channel.cpp" />
+    <ClCompile Include="base\Connector.cpp" />
+    <ClCompile Include="base\CountDownLatch.cpp" />
+    <ClCompile Include="base\EpollPoller.cpp" />
+    <ClCompile Include="base\EventLoop.cpp" />
+    <ClCompile Include="base\EventLoopThread.cpp" />
+    <ClCompile Include="base\EventLoopThreadPool.cpp" />
+    <ClCompile Include="base\FileUtil.cpp" />
+    <ClCompile Include="base\InetAddress.cpp" />
+    <ClCompile Include="base\LogFile.cpp" />
+    <ClCompile Include="base\Logging.cpp" />
+    <ClCompile Include="base\LogStream.cpp" />
+    <ClCompile Include="base\ProcessInfo.cpp" />
+    <ClCompile Include="base\Socket.cpp" />
+    <ClCompile Include="base\SocketsOperations.cpp" />
+    <ClCompile Include="base\TcpClient.cpp" />
+    <ClCompile Include="base\TcpConnection.cpp" />
+    <ClCompile Include="base\TcpServer.cpp" />
+    <ClCompile Include="base\test\AsyncLoggingTest.cpp" />
+    <ClCompile Include="base\test\EventLoopTest.cpp" />
+    <ClCompile Include="base\test\LoggingTest.cpp" />
+    <ClCompile Include="base\test\LogStreamTest.cpp" />
+    <ClCompile Include="base\test\ThreadPoolTest.cpp" />
+    <ClCompile Include="base\test\TimerQueueTest.cpp" />
+    <ClCompile Include="base\ThreadPool.cpp" />
+    <ClCompile Include="base\Timer.cpp" />
+    <ClCompile Include="base\TimerQueue.cpp" />
+    <ClCompile Include="base\Timestamp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="base\Acceptor.h" />
+    <ClInclude Include="base\any.hpp" />
+    <ClInclude Include="base\AsyncLogging.h" />
+    <ClInclude Include="base\Buffer.h" />
+    <ClInclude Include="base\Callbacks.h" />
+    <ClInclude Include="base\Channel.h" />
+    <ClInclude Include="base\Connector.h" />
+    <ClInclude Include="base\CountDownLatch.h" />
+    <ClInclude Include="base\Endian.h" />
+    <ClInclude Include="base\EpollPoller.h" />
+    <ClInclude Include="base\EventLoop.h" />
+    <ClInclude Include="base\EventLoopThread.h" />
+    <ClInclude Include="base\EventLoopThreadPool.h" />
+    <ClInclude Include="base\FileUtil.h" />
+    <ClInclude Include="base\InetAddress.h" />
+    <ClInclude Include="base\LogFile.h" />
+    <ClInclude Include="base\Logging.h" />
+    <ClInclude Include="base\LogStream.h" />
+    <ClInclude Include="base\noncopyable.h" />
+    <ClInclude Include="base\operators.hpp" />
+    <ClInclude Include="base\ProcessInfo.h" />
+    <ClInclude Include="base\Socket.h" />
+    <ClInclude Include="base\SocketsOperations.h" />
+    <ClInclude Include="base\TcpClient.h" />
+    <ClInclude Include="base\TcpConnection.h" />
+    <ClInclude Include="base\TcpServer.h" />
+    <ClInclude Include="base\ThreadPool.h" />
+    <ClInclude Include="base\Timer.h" />
+    <ClInclude Include="base\TimerId.h" />
+    <ClInclude Include="base\TimerQueue.h" />
+    <ClInclude Include="base\Timestamp.h" />
+    <ClInclude Include="base\WeakCallback.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7CDC41EC-1BB4-4260-BB94-AD99D2C77E24}</ProjectGuid>
     <Keyword>MakeFileProj</Keyword>
@@ -44,41 +111,6 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="base\AsyncLogging.cpp" />
-    <ClCompile Include="base\Channel.cpp" />
-    <ClCompile Include="base\CountDownLatch.cpp" />
-    <ClCompile Include="base\EpollPoller.cpp" />
-    <ClCompile Include="base\EventLoop.cpp" />
-    <ClCompile Include="base\FileUtil.cpp" />
-    <ClCompile Include="base\LogFile.cpp" />
-    <ClCompile Include="base\Logging.cpp" />
-    <ClCompile Include="base\LogStream.cpp" />
-    <ClCompile Include="base\ProcessInfo.cpp" />
-    <ClCompile Include="base\test\AsyncLoggingTest.cpp" />
-    <ClCompile Include="base\test\LoggingTest.cpp" />
-    <ClCompile Include="base\test\LogStreamTest.cpp" />
-    <ClCompile Include="base\test\ThreadPoolTest.cpp" />
-    <ClCompile Include="base\ThreadPool.cpp" />
-    <ClCompile Include="base\Timestamp.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="base\any.hpp" />
-    <ClInclude Include="base\AsyncLogging.h" />
-    <ClInclude Include="base\Channel.h" />
-    <ClInclude Include="base\CountDownLatch.h" />
-    <ClInclude Include="base\EpollPoller.h" />
-    <ClInclude Include="base\EventLoop.h" />
-    <ClInclude Include="base\FileUtil.h" />
-    <ClInclude Include="base\LogFile.h" />
-    <ClInclude Include="base\Logging.h" />
-    <ClInclude Include="base\LogStream.h" />
-    <ClInclude Include="base\noncopyable.h" />
-    <ClInclude Include="base\operators.hpp" />
-    <ClInclude Include="base\ProcessInfo.h" />
-    <ClInclude Include="base\ThreadPool.h" />
-    <ClInclude Include="base\Timestamp.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
