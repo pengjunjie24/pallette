@@ -53,7 +53,7 @@ namespace pallette
 		bool isReading() const { return reading_; };
 
 		void setContext(const any& context) {context_ = context;}
-		const any& getContext() const {return context_;}
+		const any& getContext() {return context_;}
 		any* getMutableContext() {return &context_;}
 
 		void setConnectionCallback(const ConnectionCallback& cb)

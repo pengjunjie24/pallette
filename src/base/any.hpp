@@ -1,8 +1,7 @@
 #ifndef PALLETTE_ANY_HPP
 #define PALLETTE_ANY_HPP
-
 #include <typeinfo>
-#include <algorithm>
+#include <iostream>
 
 namespace pallette
 {

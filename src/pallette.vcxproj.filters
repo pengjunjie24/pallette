@@ -108,6 +108,42 @@
     <ClCompile Include="base\TcpClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="base\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\ConfigTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\download\DownloadServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\download\DownloadServerMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\download\DownloadClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\download\DownloadClientMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\chat\ChatClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\chat\ChatServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\echo\EchoServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\idleconnection\EchoServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\idleconnection\EchoServerMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\singletonTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Acceptor.h">
@@ -204,6 +240,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\TcpClient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\download\DownloadServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\DataConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\download\DownloadClient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\chat\Codec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\RingBuffer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\idleconnection\EchoServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\singleton.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

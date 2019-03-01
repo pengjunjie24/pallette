@@ -197,7 +197,6 @@ void Connector::handleWrite()
 
 void Connector::handleError()
 {
-	LOG_ERROR << "Connector::handleError state=" << state_;
 	if (state_ == kConnecting)
 	{
 		int sockfd = removeAndResetChannel();

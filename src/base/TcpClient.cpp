@@ -37,7 +37,7 @@ TcpClient::TcpClient(EventLoop* loop, const InetAddress& serverAddr, const std::
 	connectionCallback_(defaultConnectionCallback),
 	messageCallback_(defaultMessageCallback),
 	retry_(false),
-	connect_(true),
+	connect_(false),
 	nextConnId_(1)
 {
 	connector_->setNewConnectionCallback(
@@ -79,11 +79,18 @@ TcpClient::~TcpClient()
 
 void TcpClient::connect()
 {
-	assert(!connect_);
-	LOG_INFO << "TcpClient::connect[" << name_ << "] - connecting to "
-		<< connector_->serverAddress().toIpPort();
-	connect_ = true;
-	connector_->start();
+	if (!connect_)
+	{
+		LOG_INFO << "TcpClient::connect[" << name_ << "] - connecting to "
+			<< connector_->serverAddress().toIpPort();
+		connect_ = true;
+		connector_->start();
+	}
+	else
+	{
+		LOG_WARN << "TcpClient::connect[" << name_ << "] - don't reapt connecting to "
+			<< connector_->serverAddress().toIpPort();
+	}
 }
 
 void TcpClient::disconnect()

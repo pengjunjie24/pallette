@@ -58,3 +58,9 @@ size_t file_util::AppendFile::write(const char* logline, size_t len)
 {
     return ::fwrite(logline, 1, len, fp_);
 }
+
+void file_util::writeFile(const std::string& filename, const std::string& content)
+{
+    AppendFile file(filename);
+    file.append(content.c_str(), content.length());
+}

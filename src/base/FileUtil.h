@@ -32,6 +32,8 @@ namespace pallette
             char buffer_[64 * 1024];
             int writtenBytes_;
         };
+
+        void writeFile(const std::string& filename, const std::string& content);
     }
 }
 
