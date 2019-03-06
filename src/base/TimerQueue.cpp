@@ -238,7 +238,7 @@ void TimerQueue::reset(Timestamp now)
 	{
 		nextExpire = timers_.begin()->first;
 	}
-	if (nextExpire.vaild())
+	if (nextExpire.valid())
 	{
 		resetTimerfd(timerfd_, nextExpire);
 	}

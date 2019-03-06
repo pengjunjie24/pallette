@@ -30,7 +30,7 @@ namespace pallette
         }
 
 
-        bool vaild() const { return microSeconds_ > 0; }
+        bool valid() const { return microSeconds_ > 0; }
         int64_t getMicroSeconds() const { return microSeconds_; }
         void swap(Timestamp& that) { std::swap(microSeconds_, that.microSeconds_); }
         time_t getSeconds() const
@@ -42,6 +42,7 @@ namespace pallette
         std::string toFormatTedString(bool showMicroSeconds = true) const;
         //默认东八区时区
         static Timestamp now();
+		static Timestamp invalid() { return Timestamp(); }
 
         static const int kMicroSecondsPerSecond = 1000 * 1000;
         static const int kSecondsPerHour = 60 * 60;

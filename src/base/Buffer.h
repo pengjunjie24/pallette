@@ -76,6 +76,9 @@ namespace pallette
 
 		size_t readFd(int fd, int* savedErrno);//从socket读出到Buffer中
 
+		const char* findCRLF() const;
+		const char* findCRLF(const char* start) const;
+
 	private:
 
 		const char* begin() const;//返回buffer起始位置
@@ -88,6 +91,8 @@ namespace pallette
 
 		static const size_t kPrePrePend = 8;//默认预留8个字节
 		static const size_t kInitalSize = 1024;//初始大小
+
+		static const char kCRLF[];
 	};
 }
 

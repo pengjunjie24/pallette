@@ -19,6 +19,7 @@
 
 using namespace pallette;
 
+const char Buffer::kCRLF[] = "\r\n";
 
 Buffer::Buffer(size_t initialSize)
 	:buffer_(kPrePrePend + initialSize),
@@ -314,6 +315,22 @@ size_t Buffer::readFd(int fd, int* savedErrno)
 	}
 
 	return n;
+}
+
+const char* Buffer::findCRLF() const
+{
+	// FIXME: replace with memmem()?
+	const char* crlf = std::search(peek(), beginWrite(), kCRLF, kCRLF + 2);
+	return crlf == beginWrite() ? NULL : crlf;
+}
+
+const char* Buffer::findCRLF(const char* start) const
+{
+	assert(peek() <= start);
+	assert(start <= beginWrite());
+	// FIXME: replace with memmem()?
+	const char* crlf = std::search(start, beginWrite(), kCRLF, kCRLF + 2);
+	return crlf == beginWrite() ? NULL : crlf;
 }
 
 const char* Buffer::begin() const
