@@ -33,6 +33,7 @@
     <ClCompile Include="base\TcpClient.cpp" />
     <ClCompile Include="base\TcpConnection.cpp" />
     <ClCompile Include="base\TcpServer.cpp" />
+    <ClCompile Include="base\test\AnyTest.cpp" />
     <ClCompile Include="base\test\AsyncLoggingTest.cpp" />
     <ClCompile Include="base\test\ConfigTest.cpp" />
     <ClCompile Include="base\test\EventLoopTest.cpp" />
@@ -52,8 +53,14 @@
     <ClCompile Include="example\download\DownloadServer.cpp" />
     <ClCompile Include="example\download\DownloadServerMain.cpp" />
     <ClCompile Include="example\echo\EchoServer.cpp" />
+    <ClCompile Include="example\hub\codec.cpp" />
+    <ClCompile Include="example\hub\hub.cpp" />
+    <ClCompile Include="example\hub\pub.cpp" />
+    <ClCompile Include="example\hub\pubsub.cpp" />
     <ClCompile Include="example\idleconnection\EchoServer.cpp" />
     <ClCompile Include="example\idleconnection\EchoServerMain.cpp" />
+    <ClCompile Include="example\multiplexer\Demux.cpp" />
+    <ClCompile Include="example\multiplexer\MultiplexerSimple.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Acceptor.h" />
@@ -95,6 +102,8 @@
     <ClInclude Include="example\DataConfig.h" />
     <ClInclude Include="example\download\DownloadClient.h" />
     <ClInclude Include="example\download\DownloadServer.h" />
+    <ClInclude Include="example\hub\codec.h" />
+    <ClInclude Include="example\hub\pubsub.h" />
     <ClInclude Include="example\idleconnection\EchoServer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

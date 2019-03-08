@@ -1,9 +1,9 @@
 /*************************************************************************
-  > File Name: DownloadServerMain.cpp
-  > Author: pengjunjie
-  > Mail: 1002398145@qq.com 
-  > Created Time: 2019年02月25日 星期一 10时54分10秒
- ************************************************************************/
+> File Name: DownloadServerMain.cpp
+> Author: pengjunjie
+> Mail: 1002398145@qq.com
+> Created Time: 2019年02月25日 星期一 10时54分10秒
+************************************************************************/
 
 #include "DownloadServer.h"
 
@@ -18,14 +18,14 @@ using namespace pallette;
 
 int main()
 {
-	LOG_INFO << "pid = " << ::getpid();
+    LOG_INFO << "pid = " << ::getpid();
 
-	EventLoop loop;
-	DataConfig config("../config.ini");
-	InetAddress listenAddr(config.serverIp(), config.serverPort());
-	std::string downloadFile = config.downloadServerFile();
+    EventLoop loop;
+    DataConfig config("../config.ini");
+    InetAddress listenAddr(config.serverIp(), config.serverPort());
+    std::string downloadFile = config.downloadServerFile();
 
-	DownloadServer server(&loop, listenAddr, downloadFile.c_str());
-	server.start();
-	loop.loop();
+    DownloadServer server(&loop, listenAddr, downloadFile.c_str());
+    server.start();
+    loop.loop();
 }

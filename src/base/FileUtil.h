@@ -33,7 +33,7 @@ namespace pallette
             int writtenBytes_;
         };
 
-        void writeFile(const std::string& filename, const std::string& content);
+        void appendFile(const std::string& filename, const std::string& content);
     }
 }
 

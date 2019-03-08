@@ -144,6 +144,27 @@
     <ClCompile Include="base\test\singletonTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="base\test\AnyTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\hub\codec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\hub\hub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\hub\pub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\hub\pubsub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\multiplexer\Demux.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\multiplexer\MultiplexerSimple.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Acceptor.h">
@@ -264,6 +285,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\singleton.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\hub\codec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\hub\pubsub.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

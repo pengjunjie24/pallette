@@ -1,9 +1,9 @@
 /*************************************************************************
-  > File Name: AsyncLoggingTest.cpp
-  > Author: pengjunjie
-  > Mail: 1002398145@qq.com
-  > Created Time: 2019年01月01日 星期二 18时22分05秒
- ************************************************************************/
+> File Name: AsyncLoggingTest.cpp
+> Author: pengjunjie
+> Mail: 1002398145@qq.com
+> Created Time: 2019年01月01日 星期二 18时22分05秒
+************************************************************************/
 
 
 #include "../AsyncLogging.h"

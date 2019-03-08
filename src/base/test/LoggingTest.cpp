@@ -21,8 +21,6 @@ void LogInThread()
     {
         LOG_INFO << "task " << i;
     }
-
-
 }
 
 int main()

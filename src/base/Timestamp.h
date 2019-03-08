@@ -1,9 +1,9 @@
 /*************************************************************************
-  > File Name: Timestamp.h
-  > Author: pengjunjie
-  > Mail: 1002398145@qq.com
-  > Created Time: 2018年12月23日 星期日 10时51分24秒
- ************************************************************************/
+> File Name: Timestamp.h
+> Author: pengjunjie
+> Mail: 1002398145@qq.com
+> Created Time: 2018年12月23日 星期日 10时51分24秒
+************************************************************************/
 
 #ifndef PALLETTE_TIMESTAMP_H
 #define PALLETTE_TIMESTAMP_H
@@ -17,7 +17,7 @@
 namespace pallette
 {
     class Timestamp : public less_than_comparable<Timestamp>
-                    , public equality_comparable<Timestamp>
+        , public equality_comparable<Timestamp>
     {
     public:
         Timestamp()
@@ -42,7 +42,7 @@ namespace pallette
         std::string toFormatTedString(bool showMicroSeconds = true) const;
         //默认东八区时区
         static Timestamp now();
-		static Timestamp invalid() { return Timestamp(); }
+        static Timestamp invalid() { return Timestamp(); }
 
         static const int kMicroSecondsPerSecond = 1000 * 1000;
         static const int kSecondsPerHour = 60 * 60;

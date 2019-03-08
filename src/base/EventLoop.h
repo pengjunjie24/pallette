@@ -1,9 +1,9 @@
 /*************************************************************************
-  > File Name: EventLoop.h
-  > Author: pengjunjie
-  > Mail: 1002398145@qq.com
-  > Created Time: 2019年01月06日 星期日 21时22分58秒
- ************************************************************************/
+> File Name: EventLoop.h
+> Author: pengjunjie
+> Mail: 1002398145@qq.com
+> Created Time: 2019年01月06日 星期日 21时22分58秒
+************************************************************************/
 
 #ifndef PALLETTE_EVENTLOOP_H
 #define PALLETTE_EVENTLOOP_H
@@ -24,7 +24,7 @@ namespace pallette
 {
     class Channel;
     class EpollPoller;
-	class TimerQueue;
+    class TimerQueue;
 
     class EventLoop : noncopyable
     {
@@ -44,9 +44,9 @@ namespace pallette
         void queueInLoop(Functor cb);
         size_t queueSize() const;
 
-		TimerId runAfter(double delay, TimerCallback cb);
-		TimerId runEvery(double interval, TimerCallback cb);
-		void cancel(TimerId timerId);
+        TimerId runAfter(double delay, TimerCallback cb);
+        TimerId runEvery(double interval, TimerCallback cb);
+        void cancel(TimerId timerId);
 
         void wakeup();
         void updateChannel(Channel* channel);
@@ -78,7 +78,7 @@ namespace pallette
         const size_t threadId_;
         Timestamp pollReturnTime_;
         std::unique_ptr<EpollPoller> poller_;
-		std::unique_ptr<TimerQueue> timerQueue_;
+        std::unique_ptr<TimerQueue> timerQueue_;
         int wakeupFd_;
         std::unique_ptr<Channel> wakeupChannel_;
         any context_;

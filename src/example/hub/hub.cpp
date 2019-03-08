@@ -1,9 +1,9 @@
 /*************************************************************************
-  > File Name: hub.cpp
-  > Author: pengjunjie
-  > Mail: 1002398145@qq.com 
-  > Created Time: 2019年03月05日 星期二 21时10分25秒
- ************************************************************************/
+> File Name: hub.cpp
+> Author: pengjunjie
+> Mail: 1002398145@qq.com
+> Created Time: 2019年03月05日 星期二 21时10分25秒
+************************************************************************/
 
 #include "codec.h"
 
@@ -21,52 +21,52 @@ using namespace std;
 
 namespace pubsub
 {
-	typedef std::set<string> ConnectionSubscription;
+    typedef std::set<string> ConnectionSubscription;
 
-	class Topic
-	{
-	public:
-		Topic(const string& topic)
-			:topic_(topic)
-		{
-		}
+    class Topic
+    {
+    public:
+        Topic(const string& topic)
+            :topic_(topic)
+        {
+        }
 
-		void add(const TcpConnectionPtr& conn)
-		{
-			audiences_.insert(conn);
-			if (lastPubTime_.valid())
-			{
-				conn->send(makeMessage());
-			}
-		}
+        void add(const TcpConnectionPtr& conn)
+        {
+            audiences_.insert(conn);
+            if (lastPubTime_.valid())
+            {
+                conn->send(makeMessage());
+            }
+        }
 
-		void remove(const TcpConnectionPtr& conn)
-		{
-			audiences_.erase(conn);
-		}
+        void remove(const TcpConnectionPtr& conn)
+        {
+            audiences_.erase(conn);
+        }
 
-		void publish(const string& content, Timestamp time)
-		{
-			content_ = content;
-			lastPubTime_ = time;
-			string message = makeMessage();
+        void publish(const string& content, Timestamp time)
+        {
+            content_ = content;
+            lastPubTime_ = time;
+            string message = makeMessage();
 
-			for (auto& audience : audiences_)
-			{
-				audience->send(message);
-			}
-		}
+            for (auto& audience : audiences_)
+            {
+                audience->send(message);
+            }
+        }
 
-	private:
+    private:
 
-		string makeMessage()
-		{
-			return "pub " + topic_ + "\r\n" + content_ + "\r\n";
-		}
+        string makeMessage()
+        {
+            return "pub " + topic_ + "\r\n" + content_ + "\r\n";
+        }
 
-		string topic_;
-		string content_;
-		Timestamp lastPubTime_;
-		std::set<TcpConnectionPtr> audiences_;
-	};
+        string topic_;
+        string content_;
+        Timestamp lastPubTime_;
+        std::set<TcpConnectionPtr> audiences_;
+    };
 }

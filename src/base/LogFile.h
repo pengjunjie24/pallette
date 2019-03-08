@@ -1,9 +1,9 @@
 /*************************************************************************
-  > File Name: LogFile.h
-  > Author: pengjunjie
-  > Mail: 1002398145@qq.com
-  > Created Time: 2018年12月31日 星期一 11时13分29秒
- ************************************************************************/
+> File Name: LogFile.h
+> Author: pengjunjie
+> Mail: 1002398145@qq.com
+> Created Time: 2018年12月31日 星期一 11时13分29秒
+************************************************************************/
 
 #ifndef PALLETTE_LOGFILE_H
 #define PALLETTE_LOGFILE_H
@@ -23,7 +23,7 @@ namespace pallette
     //日志文件的设置类，正常情况下日志的滚动按照天数来滚动的，2种情况下会检测日志是否滚动
     //1.写入字符大于rollSize_(最大可写入字符)
     //2.当行数为checkEveryN_的倍数时, 进行检测天数是否改变(当第1个条件满足后就不会检测第2个条件了)
-    class LogFile: noncopyable
+    class LogFile : noncopyable
     {
     public:
         LogFile(const std::string& basename,

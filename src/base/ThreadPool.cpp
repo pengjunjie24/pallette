@@ -1,9 +1,9 @@
 /*************************************************************************
-  > File Name: ThreadPool.cpp
-  > Author: pengjunjie
-  > Mail: 1002398145@qq.com
-  > Created Time: 2018年12月23日 星期日 23时51分32秒
- ************************************************************************/
+> File Name: ThreadPool.cpp
+> Author: pengjunjie
+> Mail: 1002398145@qq.com
+> Created Time: 2018年12月23日 星期日 23时51分32秒
+************************************************************************/
 
 #include "ThreadPool.h"
 
@@ -13,9 +13,9 @@
 using namespace pallette;
 
 ThreadPool::ThreadPool(const std::string& nameArg)
-    : name_(nameArg)
-    , maxQueueSize_(0)
-    , running_(false)
+: name_(nameArg)
+, maxQueueSize_(0)
+, running_(false)
 {
 }
 
