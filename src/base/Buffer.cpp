@@ -133,6 +133,11 @@ std::string Buffer::retrieveAllAsString()
     return retrieveAsString(readableBytes());
 }
 
+std::string Buffer::BuffertoString()
+{
+    return std::string(peek(), static_cast<int>(readableBytes()));
+}
+
 void Buffer::append(const char* data, size_t len)
 {
     ensureWritableBytes(len);
@@ -316,15 +321,15 @@ size_t Buffer::readFd(int fd, int* savedErrno)
 
     return n;
 }
-
-const char* Buffer::findCRLF() const
+#if 0
+const char* Buffer::findCRLF()
 {
     // FIXME: replace with memmem()?
     const char* crlf = std::search(peek(), beginWrite(), kCRLF, kCRLF + 2);
     return crlf == beginWrite() ? NULL : crlf;
 }
 
-const char* Buffer::findCRLF(const char* start) const
+const char* Buffer::findCRLF(const char* start)
 {
     assert(peek() <= start);
     assert(start <= beginWrite());
@@ -332,7 +337,7 @@ const char* Buffer::findCRLF(const char* start) const
     const char* crlf = std::search(start, beginWrite(), kCRLF, kCRLF + 2);
     return crlf == beginWrite() ? NULL : crlf;
 }
-
+#endif
 const char* Buffer::begin() const
 {
     return &*buffer_.begin();

@@ -18,6 +18,7 @@
     <ClCompile Include="base\Config.cpp" />
     <ClCompile Include="base\Connector.cpp" />
     <ClCompile Include="base\CountDownLatch.cpp" />
+    <ClCompile Include="base\Daemon.cpp" />
     <ClCompile Include="base\EpollPoller.cpp" />
     <ClCompile Include="base\EventLoop.cpp" />
     <ClCompile Include="base\EventLoopThread.cpp" />
@@ -36,7 +37,9 @@
     <ClCompile Include="base\test\AnyTest.cpp" />
     <ClCompile Include="base\test\AsyncLoggingTest.cpp" />
     <ClCompile Include="base\test\ConfigTest.cpp" />
+    <ClCompile Include="base\test\DaemonTest.cpp" />
     <ClCompile Include="base\test\EventLoopTest.cpp" />
+    <ClCompile Include="base\test\FileUtilTest.cpp" />
     <ClCompile Include="base\test\LoggingTest.cpp" />
     <ClCompile Include="base\test\LogStreamTest.cpp" />
     <ClCompile Include="base\test\singletonTest.cpp" />
@@ -61,17 +64,28 @@
     <ClCompile Include="example\idleconnection\EchoServerMain.cpp" />
     <ClCompile Include="example\multiplexer\Demux.cpp" />
     <ClCompile Include="example\multiplexer\MultiplexerSimple.cpp" />
+    <ClCompile Include="example\ttcp\Common.cpp" />
+    <ClCompile Include="example\ttcp\main.cpp" />
+    <ClCompile Include="example\ttcp\Ttcp.cpp" />
+    <ClCompile Include="example\ttcp\TtcpBlocking.cpp" />
+    <ClCompile Include="jsoncpp\dist\jsoncpp.cpp" />
+    <ClCompile Include="jsoncpp\jsontest\json_test1.cpp" />
+    <ClCompile Include="jsoncpp\jsontest\json_test2.cpp" />
+    <ClCompile Include="jsoncpp\jsontest\json_test3.cpp" />
+    <ClCompile Include="jsoncpp\jsontest\json_test4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Acceptor.h" />
     <ClInclude Include="base\any.hpp" />
     <ClInclude Include="base\AsyncLogging.h" />
+    <ClInclude Include="base\BaseError.hpp" />
     <ClInclude Include="base\Buffer.h" />
     <ClInclude Include="base\Callbacks.h" />
     <ClInclude Include="base\Channel.h" />
     <ClInclude Include="base\Config.h" />
     <ClInclude Include="base\Connector.h" />
     <ClInclude Include="base\CountDownLatch.h" />
+    <ClInclude Include="base\Daemon.h" />
     <ClInclude Include="base\Endian.h" />
     <ClInclude Include="base\EpollPoller.h" />
     <ClInclude Include="base\EventLoop.h" />
@@ -105,6 +119,9 @@
     <ClInclude Include="example\hub\codec.h" />
     <ClInclude Include="example\hub\pubsub.h" />
     <ClInclude Include="example\idleconnection\EchoServer.h" />
+    <ClInclude Include="example\ttcp\Common.h" />
+    <ClInclude Include="jsoncpp\dist\json\json-forwards.h" />
+    <ClInclude Include="jsoncpp\dist\json\json.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7CDC41EC-1BB4-4260-BB94-AD99D2C77E24}</ProjectGuid>

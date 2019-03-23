@@ -42,6 +42,7 @@ namespace pallette
         void retrieveAsChar(char* data, size_t& len);//取出len长度的数据，len是传入传出参数
         std::string retrieveAsString(size_t len);//Buffer中取走len长度数据
         std::string retrieveAllAsString();//Buffer全部取走
+        std::string BuffertoString();//将buffer全部转为string,buffer长度不变
 
         int64_t peekInt64() const;
         int32_t peekInt32() const;
@@ -76,8 +77,8 @@ namespace pallette
 
         size_t readFd(int fd, int* savedErrno);//从socket读出到Buffer中
 
-        const char* findCRLF() const;
-        const char* findCRLF(const char* start) const;
+        const char* findCRLF();
+        const char* findCRLF(const char* start);
 
     private:
 
