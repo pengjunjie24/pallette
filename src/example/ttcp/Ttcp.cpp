@@ -24,8 +24,8 @@ struct Context
     Buffer output;
 
     Context()
-        : count(0),
-        bytes(0)
+        : count(0)
+        , bytes(0)
     {
         session.number = 0;
         session.length = 0;
@@ -37,12 +37,12 @@ namespace trans
 
     void onConnection(const Options& opt, const TcpConnectionPtr& conn)
     {
+        LOG_INFO << conn->peerAddress().toIpPort() << " -> "
+            << conn->localAddress().toIpPort() << " is "
+            << (conn->connected() ? "UP" : "DOWN");
+
         if (conn->connected())
         {
-            LOG_INFO << conn->peerAddress().toIpPort() << " -> "
-                << conn->localAddress().toIpPort() << " is "
-                << (conn->connected() ? "UP" : "DOWN");
-
             Context context;
             context.count = 1;
             context.bytes = opt.length;
@@ -66,7 +66,7 @@ namespace trans
         else
         {
             const Context& context = any_cast<Context>(conn->getContext());
-            LOG_INFO << "payload bytes " << context.bytes;
+            LOG_INFO << "payload bytes: " << context.bytes;
             conn->getLoop()->quit();
         }
     }
@@ -117,9 +117,10 @@ void transmit(const Options& opt)
     client.connect();
     loop.loop();
 
-    double elapsed = timeDifference(pallette::Timestamp::now(), start);
-    double total_mb = 1.0 * opt.length * opt.number / 1024 / 1024;
-    printf("%.3f MiB transferred\n%.3f MiB/s\n", total_mb, total_mb / elapsed);
+    double elapsed = timeDifference(pallette::Timestamp::now(), start);//发送完成的时间
+    double totalMb = 1.0 * opt.length * opt.number / 1024 / 1024;//发送数据大小(MB)
+    printf("%.3f MiB transferred\n%.3f MiB/s\n", totalMb, totalMb / elapsed);
+    printf("latency: %.6fs\n", elapsed / opt.number);
 }
 
 
@@ -127,6 +128,10 @@ namespace receiving
 {
     void onConnection(const TcpConnectionPtr& conn)
     {
+        LOG_INFO << conn->peerAddress().toIpPort() << " -> "
+            << conn->localAddress().toIpPort() << " is "
+            << (conn->connected() ? "UP" : "DOWN");
+
         if (conn->connected())
         {
             Context context;
@@ -135,8 +140,8 @@ namespace receiving
         else
         {
             const Context& context = any_cast<Context>(conn->getContext());
-            LOG_INFO << "payload bytes " << context.bytes;
-            conn->getLoop()->quit();
+            LOG_INFO << "payload bytes: " << static_cast<double>(1.0 * context.bytes / 1024 / 1024)
+                << "MiB from " << conn->peerAddress().toIpPort();
         }
     }
 
@@ -154,8 +159,8 @@ namespace receiving
                     session.number = buf->readInt32();
                     session.length = buf->readInt32();
                     context->output.appendInt32(session.length);
-                    printf("receive number = %d\nreceive length = %d\n",
-                        session.number, session.length);
+                    LOG_INFO << "receive number = " << session.number << ", receive length = "
+                        << session.length << " form " << conn->peerAddress().toIpPort();
                 }
                 else
                 {
@@ -164,13 +169,13 @@ namespace receiving
             }
             else
             {
-                const unsigned total_len = session.length + static_cast<int>(sizeof(int32_t));
+                const unsigned totalLen = session.length + static_cast<int>(sizeof(int32_t));
                 const int32_t length = buf->peekInt32();
                 if (length == session.length)
                 {
-                    if (buf->readableBytes() >= total_len)
+                    if (buf->readableBytes() >= totalLen)
                     {
-                        buf->retrieve(total_len);
+                        buf->retrieve(totalLen);
                         conn->send(context->output.BuffertoString());
                         ++context->count;
                         context->bytes += length;

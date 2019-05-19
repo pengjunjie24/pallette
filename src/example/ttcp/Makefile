@@ -19,14 +19,14 @@ RM = rm
 MAKE = make
 
 .PHONY: all
-all: subsystem $(TARGET1) $(TARGET2)
+all: $(TARGET1) $(TARGET2)
 $(TARGET1): $(OBJ) $(TARGET1).cpp $(SOURCE)
 	$(CC) $(LIBS) $(CFLAGS) $(OBJ) $(TARGET1).cpp $(SOURCE) -o $(TARGET1)
 
 $(TARGET2): $(OBJ) $(TARGET2).cpp $(SOURCE)
 	$(CC) $(LIBS) $(CFLAGS) $(OBJ) $(TARGET2).cpp $(SOURCE) -o $(TARGET2)
 
-subsystem:
+$(OBJ):
 	cd $(SOURCE_DIR) && $(MAKE)
 
 .PHONY: clean

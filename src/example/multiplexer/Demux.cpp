@@ -32,6 +32,7 @@ struct Entry
     Buffer pending;
 };
 
+//后端服务器，只连接一个连接服务器
 class DemuxServer : noncopyable
 {
 public:
@@ -55,6 +56,7 @@ public:
     {
         if (conn->connected())
         {
+            //已有连接服务器，断开新的链接
             if (serverConn_)
             {
                 conn->shutdown();
@@ -69,8 +71,8 @@ public:
         {
             if (serverConn_ == conn)
             {
-                serverConn_.reset();
-                socksConns_.clear();
+                serverConn_.reset();//销毁链接
+                socksConns_.clear();//关闭所有客户端连接
 
                 LOG_INFO << "onServerConnection reset serverConn_";
             }
@@ -220,7 +222,7 @@ public:
 private:
     EventLoop* loop_;
     TcpServer server_;
-    TcpConnectionPtr serverConn_;
+    TcpConnectionPtr serverConn_;//连接服务器的链接
     const InetAddress socksAddr_;
-    std::map<int, Entry> socksConns_;
+    std::map<int, Entry> socksConns_;//客户端链接
 };

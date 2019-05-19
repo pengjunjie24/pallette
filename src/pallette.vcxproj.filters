@@ -15,10 +15,109 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="example\download\DownloadServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\download\DownloadServerMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\download\DownloadClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\download\DownloadClientMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\chat\ChatClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\chat\ChatServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\echo\EchoServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\idleconnection\EchoServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\idleconnection\EchoServerMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\hub\codec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\hub\hub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\hub\pub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\hub\pubsub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\multiplexer\Demux.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\multiplexer\MultiplexerSimple.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\ttcp\Common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\ttcp\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\ttcp\Ttcp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example\ttcp\TtcpBlocking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp\dist\jsoncpp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp\jsontest\json_test1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp\jsontest\json_test2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp\jsontest\json_test3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp\jsontest\json_test4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vehicleprotocol\codec\MessageBodyCodec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vehicleprotocol\codec\MessageCodec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vehicleprotocol\MessageBodyCodec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vehicleprotocol\MessageCodec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vehicleprotocol\test\CodecTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\AnyTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="base\test\AsyncLoggingTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="base\test\ConfigTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\DaemonTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="base\test\EventLoopTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\FileUtilTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="base\test\LoggingTest.cpp">
@@ -27,7 +126,16 @@
     <ClCompile Include="base\test\LogStreamTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="base\test\SignalSlotTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\singletonTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="base\test\ThreadPoolTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\TimerQueueTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="base\Acceptor.cpp">
@@ -42,7 +150,16 @@
     <ClCompile Include="base\Channel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="base\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\Connector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="base\CountDownLatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\Daemon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="base\EpollPoller.cpp">
@@ -81,10 +198,7 @@
     <ClCompile Include="base\SocketsOperations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\ThreadPool.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="base\Timestamp.cpp">
+    <ClCompile Include="base\TcpClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="base\TcpConnection.cpp">
@@ -93,7 +207,7 @@
     <ClCompile Include="base\TcpServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\Connector.cpp">
+    <ClCompile Include="base\ThreadPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="base\Timer.cpp">
@@ -102,71 +216,62 @@
     <ClCompile Include="base\TimerQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\test\TimerQueueTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="base\TcpClient.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="base\Config.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="base\test\ConfigTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\download\DownloadServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\download\DownloadServerMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\download\DownloadClient.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\download\DownloadClientMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\chat\ChatClient.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\chat\ChatServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\echo\EchoServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\idleconnection\EchoServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\idleconnection\EchoServerMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="base\test\singletonTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="base\test\AnyTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\hub\codec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\hub\hub.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\hub\pub.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\hub\pubsub.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\multiplexer\Demux.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="example\multiplexer\MultiplexerSimple.cpp">
+    <ClCompile Include="base\Timestamp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="example\download\DownloadServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\DataConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\download\DownloadClient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\chat\Codec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\idleconnection\EchoServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\hub\codec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\hub\pubsub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="example\ttcp\Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\dist\json\json-forwards.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\dist\json\json.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vehicleprotocol\codec\MessageBodyCodec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vehicleprotocol\codec\MessageCodec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vehicleprotocol\MessageBodyCodec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vehicleprotocol\MessageCodec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vehicleprotocol\ProtocolEnum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vehicleprotocol\ProtocolType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vehicleprotocol\StringAndInteger.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="base\Acceptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -176,13 +281,28 @@
     <ClInclude Include="base\AsyncLogging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="base\BaseError.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="base\Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Callbacks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\Channel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="base\Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Connector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="base\CountDownLatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Daemon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\Endian.h">
@@ -224,73 +344,46 @@
     <ClInclude Include="base\ProcessInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="base\RingBuffer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\SignalSlot.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\singleton.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="base\Socket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\SocketsOperations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base\ThreadPool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="base\Timestamp.h">
+    <ClInclude Include="base\TcpClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\TcpConnection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base\Callbacks.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="base\WeakCallback.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="base\TcpServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base\Connector.h">
+    <ClInclude Include="base\ThreadPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base\TimerQueue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="base\TimerId.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base\TcpClient.h">
+    <ClInclude Include="base\TimerQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base\Config.h">
+    <ClInclude Include="base\Timestamp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="example\download\DownloadServer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="example\DataConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="example\download\DownloadClient.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="example\chat\Codec.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="base\RingBuffer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="example\idleconnection\EchoServer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="base\singleton.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="example\hub\codec.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="example\hub\pubsub.h">
+    <ClInclude Include="base\WeakCallback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
