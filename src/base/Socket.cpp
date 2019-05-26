@@ -84,6 +84,7 @@ void Socket::shutdownWrite()
     sockets::shutdownWrite(sockfd_);
 }
 
+//减少延迟，打开后就关闭掉Nagle算法，延时敏感型，同时数据传输量比较小的应用有帮组
 void Socket::setTcpNoDelay(bool on)
 {
     int optval = on ? 1 : 0;

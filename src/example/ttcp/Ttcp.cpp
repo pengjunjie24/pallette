@@ -16,6 +16,11 @@
 
 using namespace pallette;
 
+//客户端链接上后先发送SessionMessage结构体，告诉平台每次发送数据长度和发送次数
+//然后客户端发送数据，数据格式为:数据头(int32)+数据内容
+//服务端接收到客户端发送数据后，给客户端应答，应答内容为接收到数据长度(int32)
+//客户端接收到应答后再继续发送下一条数据
+//等到客户端发送次数达到预定次数后，主动断开连接
 struct Context
 {
     int count;//已经发送消息次数
@@ -57,11 +62,11 @@ namespace trans
             context.output.hasWritten(opt.length);
             conn->setContext(context);
 
-            SessionMessage sessionMessage = { 0, 0 };
+            SessionMessage sessionMessage = { 0, 0 };//填充SessionMessage结构体
             sessionMessage.number = htonl(opt.number);
             sessionMessage.length = htonl(opt.length);
-            conn->send(&sessionMessage, sizeof(sessionMessage));
-            conn->send(context.output.BuffertoString());
+            conn->send(&sessionMessage, sizeof(sessionMessage));//连接上后先发送SessionMessage
+            conn->send(context.output.BuffertoString());//再发送数据
         }
         else
         {
@@ -77,13 +82,13 @@ namespace trans
         while (buf->readableBytes() >= sizeof(int32_t))
         {
             int32_t length = buf->readInt32();
-            if (length == context->session.length)
+            if (length == context->session.length)//平台应答接收到的数据长度和客户端发送的数据长度相等
             {
-                if (context->count < context->session.number)
+                if (context->count < context->session.number)//客户端发送数据次数没有达到最大次数
                 {
-                    conn->send(context->output.BuffertoString());
+                    conn->send(context->output.BuffertoString());//继续发送数据
                     ++context->count;
-                    context->bytes += length;
+                    context->bytes += length;//客户端累加发送数据总长度
                 }
                 else
                 {
@@ -93,7 +98,7 @@ namespace trans
             }
             else
             {
-                conn->shutdown();
+                conn->shutdown();//数据出现问题则断开
                 break;
             }
         }
@@ -152,33 +157,34 @@ namespace receiving
         {
             Context* context = any_cast<Context>(conn->getMutableContext());
             SessionMessage& session = context->session;
-            if (session.number == 0 && session.length == 0)
+            if (session.number == 0 && session.length == 0)//第一次收到客户端数据
             {
-                if (buf->readableBytes() >= sizeof(SessionMessage))
+                if (buf->readableBytes() >= sizeof(SessionMessage))//要先接收到SessionMessage结构体
                 {
                     session.number = buf->readInt32();
                     session.length = buf->readInt32();
-                    context->output.appendInt32(session.length);
+                    context->output.appendInt32(session.length);//应答buffer中填入每次要接收的数据长度
                     LOG_INFO << "receive number = " << session.number << ", receive length = "
                         << session.length << " form " << conn->peerAddress().toIpPort();
                 }
                 else
                 {
-                    break;
+                    break;//没有接收到SessionMessage结构体长度的数据，重新等待接收
                 }
             }
             else
             {
-                const unsigned totalLen = session.length + static_cast<int>(sizeof(int32_t));
+                const unsigned totalLen = session.length + static_cast<int>(sizeof(int32_t));//解析数据包头长度
                 const int32_t length = buf->peekInt32();
                 if (length == session.length)
                 {
                     if (buf->readableBytes() >= totalLen)
                     {
-                        buf->retrieve(totalLen);
-                        conn->send(context->output.BuffertoString());
-                        ++context->count;
-                        context->bytes += length;
+                        buf->retrieve(totalLen);//接收到一条完整数据
+                        conn->send(context->output.BuffertoString());//发送应答给客户端
+                        ++context->count;//累加接收到的次数
+                        context->bytes += length;//累加接收到的总数据长度
+
                         if (context->count >= session.number)
                         {
                             conn->shutdown();

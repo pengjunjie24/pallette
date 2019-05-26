@@ -7,12 +7,19 @@
 
 #include "ProcessInfo.h"
 
-#include <thread>
 #include <limits.h>
 #include <unistd.h>
 #include <string.h>
 #include <assert.h>
+#include <sys/syscall.h>
+
 using namespace pallette;
+
+namespace
+{
+    thread_local pid_t tCachedTid = 0;
+    pid_t cachePid = 0;
+}
 
 std::string process_info::processname()
 {
@@ -30,11 +37,19 @@ std::string process_info::processname()
 
 pid_t process_info::pid()
 {
-    return ::getpid();
+    if (cachePid == 0)
+    {
+        cachePid = ::getpid();
+    }
+
+    return cachePid;
 }
 
-size_t process_info::tid()
+pid_t process_info::tid()
 {
-    std::thread::id id = std::this_thread::get_id();
-    return std::hash<std::thread::id>()(id);
+    if (tCachedTid == 0)
+    {
+        tCachedTid = static_cast<pid_t>(syscall(SYS_gettid));
+    }
+    return tCachedTid;
 }

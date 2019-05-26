@@ -16,7 +16,7 @@ namespace pallette
     {
         std::string processname();
         pid_t pid();
-        size_t tid();
+        pid_t tid();
     }
 }
 
