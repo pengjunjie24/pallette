@@ -58,27 +58,6 @@ const char* Buffer::peek() const
     return begin() + readIndex_;
 }
 
-const char* Buffer::find(const void* start, int ch)
-{
-    assert(peek() <= start);
-    assert(start <= beginWrite());
-
-    return static_cast<const char*>(memchr(start, ch, readableBytes()));
-}
-
-int Buffer::findPlace(const void* start, int ch)
-{
-    const char* findStr =
-        static_cast<const char*>(memchr(start, ch, readableBytes()));
-
-    int result = -1;
-    if (findStr != NULL)
-    {
-        result = findStr - peek();
-    }
-    return result;
-}
-
 void Buffer::retrieve(size_t len)
 {
     assert(len <= readableBytes());
@@ -247,6 +226,11 @@ char* Buffer::beginWrite()
     return begin() + writeIndex_;
 }
 
+const char* Buffer::beginWrite() const
+{
+    return begin() + writeIndex_;
+}
+
 void Buffer::hasWritten(size_t len)
 {
     writeIndex_ += len;
@@ -321,23 +305,7 @@ size_t Buffer::readFd(int fd, int* savedErrno)
 
     return n;
 }
-#if 0
-const char* Buffer::findCRLF()
-{
-    // FIXME: replace with memmem()?
-    const char* crlf = std::search(peek(), beginWrite(), kCRLF, kCRLF + 2);
-    return crlf == beginWrite() ? NULL : crlf;
-}
 
-const char* Buffer::findCRLF(const char* start)
-{
-    assert(peek() <= start);
-    assert(start <= beginWrite());
-    // FIXME: replace with memmem()?
-    const char* crlf = std::search(start, beginWrite(), kCRLF, kCRLF + 2);
-    return crlf == beginWrite() ? NULL : crlf;
-}
-#endif
 const char* Buffer::begin() const
 {
     return &*buffer_.begin();
@@ -372,4 +340,16 @@ void Buffer::makeSpace(size_t len)
         readIndex_ = kPrePrePend;
         writeIndex_ = kPrePrePend + readable;
     }
+}
+
+const char* Buffer::findStr(std::string searchString, const char* start) const
+{
+    const char* startPlace = ((start == NULL) ? peek() : start);
+    assert(peek() <= startPlace);
+    assert(startPlace <= beginWrite());
+
+    const char* findStrPlace = static_cast<const char*>(memmem(startPlace, 
+        beginWrite() - startPlace, searchString.c_str(), searchString.length()));
+
+    return findStrPlace == beginWrite() ? NULL : findStrPlace;
 }

@@ -28,9 +28,9 @@ void runInThread()
     for (int i = 0; i < n; ++i)
     {
         kLongLog = true;
-        LOG_DEBUG << "Hello DEBUG 0245" << kLongLog << i;
+        LOG_DEBUG << "Hello DEBUG 0245 " << kLongLog << " " << i;
         kLongLog = false;
-        LOG_WARN << "Hello WARN 1244" << kLongLog << i;
+        LOG_WARN << "Hello WARN 1244 " << kLongLog << " " << i;
     }
 }
 

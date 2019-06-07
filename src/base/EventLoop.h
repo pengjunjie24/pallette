@@ -54,7 +54,7 @@ namespace pallette
         bool hasChannel(Channel* channel);
 
         void assertInLoopThread();
-        bool isInLoopThread() const { return threadId_ == process_info::tid(); }
+        bool isInLoopThread() const { return static_cast<pid_t>(threadId_) == process_info::tid(); }
         bool eventHandling() const { return eventHandling_; }
 
         void setContext(const any& context) { context_ = context; }

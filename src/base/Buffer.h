@@ -33,13 +33,9 @@ namespace pallette
 
         const char* peek() const;//可读空间起始指针位置
 
-        const char* find(const void* start, int ch);//查询字符
-        int findPlace(const void* start, int ch);
-
         void retrieve(size_t len);//取走len长度数据
         void retrieveUntil(const char* end);//end前数据全部取走
         void retrieveAll();//全部取走
-        void retrieveAsChar(char* data, size_t& len);//取出len长度的数据，len是传入传出参数
         std::string retrieveAsString(size_t len);//Buffer中取走len长度数据
         std::string retrieveAllAsString();//Buffer全部取走
         std::string BuffertoString();//将buffer全部转为string,buffer长度不变
@@ -66,6 +62,7 @@ namespace pallette
         void ensureWritableBytes(size_t len);//确保Buffer可以写入len长度数据
 
         char* beginWrite();//返回可写入位置的指针
+        const char* beginWrite() const;
         void hasWritten(size_t len);//写入len长度后，移动可写起始位置
         size_t buffferCapactity() const;
 
@@ -77,8 +74,7 @@ namespace pallette
 
         size_t readFd(int fd, int* savedErrno);//从socket读出到Buffer中
 
-        const char* findCRLF();
-        const char* findCRLF(const char* start);
+        const char* findStr(std::string searchString, const char* start = NULL) const;
 
     private:
 

@@ -166,7 +166,7 @@ int file_util::ReadSmallFile::readToBuffer(int* size)
                 *size = static_cast<int>(n);
             }
             buf_[n] = '\0';
-        }
+        }l
         else
         {
             err = errno;
