@@ -6,8 +6,8 @@
  ************************************************************************/
 
 #include "Logging.h"
+#include "ProcessInfo.h"
 
-#include <thread>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -80,10 +80,9 @@ Logging::Logging(const char* file, int line, ENUM_LOGLEVEL level, const char* fu
         basename_.assign(slash + 1);
     }
 
-    std::thread::id id = std::this_thread::get_id();
     logBuffer_ << time_.toFormatTedString(true) << " [" << LogLevelName[level_] << "]"
-        << " [" << std::hash<std::thread::id>()(id) << "] " << basename_
-        << " " << func_ << " " << line_ << ": {";
+        << " [" << process_info::tid() << "] " << basename_ << " " << func_ << " "
+        << line_ << ": {";
 
     if (systemError && saveError != 0)
     {

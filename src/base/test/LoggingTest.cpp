@@ -10,13 +10,14 @@
 #include "../CountDownLatch.h"
 
 #include <functional>
+#include <unistd.h>
 
 using namespace pallette;
 void LogInThread()
 {
     LOG_INFO << "logInThread";
 
-    int n = 100;
+    int n = 1000;
     for (int i = 0; i < n; ++i)
     {
         LOG_INFO << "task " << i;
@@ -33,9 +34,7 @@ int main()
     pool.run(LogInThread);
     pool.run(LogInThread);
 
-    CountDownLatch latch(1);
-    pool.run(std::bind(&CountDownLatch::countDown, &latch));
-    latch.wait();
+    sleep(2);
 
     pool.stop();
 

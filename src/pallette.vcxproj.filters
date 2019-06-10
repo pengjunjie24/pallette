@@ -219,6 +219,15 @@
     <ClCompile Include="base\Timestamp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="base\test\Base64Test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\test\BufferTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base\Base64.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="example\download\DownloadServer.h">
@@ -384,6 +393,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\WeakCallback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Base64.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

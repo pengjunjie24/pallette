@@ -84,21 +84,6 @@ void Buffer::retrieveAll()
     writeIndex_ = kPrePrePend;
 }
 
-void Buffer::retrieveAsChar(char* data, size_t& len)
-{
-    if (len < readableBytes())
-    {
-        ::memcpy(data, peek(), len);
-        retrieve(len);
-    }
-    else
-    {
-        ::memcpy(data, peek(), readableBytes());
-        len = readableBytes();
-        retrieveAll();
-    }
-}
-
 std::string Buffer::retrieveAsString(size_t len)
 {
     assert(len <= readableBytes());

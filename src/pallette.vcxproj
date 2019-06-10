@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="base\Acceptor.cpp" />
     <ClCompile Include="base\AsyncLogging.cpp" />
+    <ClCompile Include="base\Base64.cpp" />
     <ClCompile Include="base\Buffer.cpp" />
     <ClCompile Include="base\Channel.cpp" />
     <ClCompile Include="base\Config.cpp" />
@@ -36,6 +37,8 @@
     <ClCompile Include="base\TcpServer.cpp" />
     <ClCompile Include="base\test\AnyTest.cpp" />
     <ClCompile Include="base\test\AsyncLoggingTest.cpp" />
+    <ClCompile Include="base\test\Base64Test.cpp" />
+    <ClCompile Include="base\test\BufferTest.cpp" />
     <ClCompile Include="base\test\ConfigTest.cpp" />
     <ClCompile Include="base\test\DaemonTest.cpp" />
     <ClCompile Include="base\test\EventLoopTest.cpp" />
@@ -84,6 +87,7 @@
     <ClInclude Include="base\Acceptor.h" />
     <ClInclude Include="base\any.hpp" />
     <ClInclude Include="base\AsyncLogging.h" />
+    <ClInclude Include="base\Base64.h" />
     <ClInclude Include="base\BaseError.hpp" />
     <ClInclude Include="base\Buffer.h" />
     <ClInclude Include="base\Callbacks.h" />
