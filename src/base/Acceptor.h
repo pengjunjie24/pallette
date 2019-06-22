@@ -19,6 +19,7 @@ namespace pallette
     class EventLoop;
     class InetAddress;
 
+    //对accept操作的封装
     class Acceptor : noncopyable
     {
     public:
@@ -39,11 +40,11 @@ namespace pallette
         void handleRead();
 
         EventLoop* loop_;
-        Socket acceptSocket_;
-        Channel acceptChannel_;
-        NewConnectionCallback newConnectionCallback_;
+        Socket acceptSocket_;//监听ip和端口的套接字
+        Channel acceptChannel_;//监听套接字的通道
+        NewConnectionCallback newConnectionCallback_;//有新连接到来时调用的回调函数
         bool listenning_;
-        int idleFd_;
+        int idleFd_;//空闲文件描述符，用于fd耗尽时
     };
 }
 

@@ -20,6 +20,9 @@ namespace pallette
 {
     class EventLoop;
 
+    //Channel负责注册读写事件，并且保存了fd读写事件发生时的回调函数
+    //它只负责对一个文件描述符fd的IO事件分发，但不拥有fd,在析构时不关闭fd
+    //Channel会把不同的IO事件分发给不同的回调函数,如:readCallback_等
     class Channel : noncopyable
     {
     public:
@@ -42,11 +45,11 @@ namespace pallette
         void setRevents(int revt) { revents_ = revt; }
         bool isNoneEvent() const { return events_ == kNoneEvent; }
 
-        void enableReading() { events_ |= kReadEvent; update(); }
-        void disableReading() { events_ &= ~kReadEvent; update(); }
+        void enableReading() { events_ |= kReadEvent; update(); }//监听该通道的可读事件
+        void disableReading() { events_ &= ~kReadEvent; update(); }//取消监听通道可读事件
         void enableWriting() { events_ |= kWriteEvent; update(); }
         void disableWriting() { events_ &= ~kWriteEvent; update(); }
-        void disableAll() { events_ = kNoneEvent; update(); }
+        void disableAll() { events_ = kNoneEvent; update(); }//从epoll中取消对该文件描述符的监听
         bool isWriting() const { return events_ & kWriteEvent; }
         bool isReading() const { return events_ & kReadEvent; }
 
@@ -61,11 +64,11 @@ namespace pallette
 
     private:
         static std::string eventsToString(int fd, int ev);
-        void update();
+        void update();//更新监听事件
         void handleEventWithGuard(Timestamp receiveTime);
 
-        EventLoop* loop_;
-        const int fd_;
+        EventLoop* loop_;//channel所属的事件循环loop_
+        const int fd_;//channel对应的fd
         int events_;//channel监听的事件
         int revents_;//epoll返回时被响应的事件
         int index_;//在EpollPoller中的状态,在EpollPoller中使用

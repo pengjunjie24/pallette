@@ -39,7 +39,7 @@ EventLoop* EventLoopThread::startLoop()
         }
     }
 
-    return loop_;
+    return loop_;//返回EventLoop的线程句柄
 }
 
 void EventLoopThread::threadFunc()

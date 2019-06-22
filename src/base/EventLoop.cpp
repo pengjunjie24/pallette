@@ -198,7 +198,7 @@ void EventLoop::removeChannel(Channel* channel)
 {
     assert(channel->ownerLoop() == this);
     assertInLoopThread();
-    if (eventHandling_)
+    if (eventHandling_)//在处理激活通道事件时，不能移除已经被激活的通道
     {
         assert(currentActiveChannel_ == channel ||
             std::find(activeChannels_.begin(), activeChannels_.end(), channel) == activeChannels_.end());

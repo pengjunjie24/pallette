@@ -20,6 +20,7 @@ namespace pallette
     class EventLoop;
     class EventLoopThreadPool;
 
+    //Tcp服务器对象
     class TcpServer : noncopyable
     {
     public:
@@ -64,24 +65,24 @@ namespace pallette
         }
 
     private:
-        void newConnection(int sockfd, const InetAddress& peerAddr);
-        void removeConnection(const TcpConnectionPtr& conn);
+        void newConnection(int sockfd, const InetAddress& peerAddr);//处理新连接函数
+        void removeConnection(const TcpConnectionPtr& conn);//删除连接的函数
         void removeConnectionInLoop(const TcpConnectionPtr& conn);
 
         typedef std::map<std::string, TcpConnectionPtr> ConnectionMap;
 
         EventLoop* loop_;  // the acceptor loop
-        const std::string ipPort_;
-        const std::string name_;
+        const std::string ipPort_;//服务器ip和端口
+        const std::string name_;//服务器名字
         std::unique_ptr<Acceptor> acceptor_; // avoid revealing Acceptor
-        std::shared_ptr<EventLoopThreadPool> threadPool_;
+        std::shared_ptr<EventLoopThreadPool> threadPool_;//IO线程池
         ConnectionCallback connectionCallback_;
         MessageCallback messageCallback_;
         WriteCompleteCallback writeCompleteCallback_;
         ThreadInitCallback threadInitCallback_;
         std::atomic<bool> started_;
-        int nextConnId_;
-        ConnectionMap connections_;
+        int nextConnId_;//连接id，用于连接名
+        ConnectionMap connections_;//连接列表
     };
 
 }

@@ -28,8 +28,7 @@ std::string Timestamp::toFormatTedString(bool showMicroSeconds) const
     char buf[64] = { 0 };
     time_t seconds = static_cast<time_t>(microSeconds_ / kMicroSecondsPerSecond);
     struct tm tm_time;
-    //gmtime_r是gmtime的线程安全版
-    gmtime_r(&seconds, &tm_time);
+    gmtime_r(&seconds, &tm_time);    //gmtime_r是gmtime的线程安全版
 
     if (showMicroSeconds)
     {

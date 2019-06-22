@@ -20,6 +20,7 @@ namespace pallette
 {
     class EventLoop;
 
+    //IO线程类，在线程函数中创建一个EventLoop对象并调用EventLoop::loop(IO线程不一定是主线程)
     class EventLoopThread : noncopyable
     {
     public:
@@ -27,17 +28,17 @@ namespace pallette
 
         EventLoopThread(const ThreadInitCallback& cb = ThreadInitCallback());
         ~EventLoopThread();
-        EventLoop* startLoop();
+        EventLoop* startLoop();//在其他线程调用
 
     private:
-        void threadFunc();
+        void threadFunc();//本线程调用loop()
 
         EventLoop* loop_;
         bool exiting_;
         std::thread thread_;
         std::mutex mutex_;
         std::condition_variable cond_;
-        ThreadInitCallback callback_;
+        ThreadInitCallback callback_;//线程初始化函数
     };
 }
 

@@ -80,7 +80,7 @@ void AsyncLogging::stop()
 void AsyncLogging::threadFunc()
 {
     assert(running_ == true);
-    latch_.countDown();
+    latch_.countDown();//线程启动后通知主线程
     LogFile output(basename_, rollSize_);
     BufferPtr newBuffer1(new Buffer);
     BufferPtr newBuffer2(new Buffer);
@@ -100,8 +100,8 @@ void AsyncLogging::threadFunc()
                 cond_.wait_for(lock, std::chrono::seconds(flushInterval_));
             }
             buffers_.push_back(std::move(currentBuffer_));
-            currentBuffer_ = std::move(newBuffer1);
-            buffersToWrite.swap(buffers_);
+            currentBuffer_ = std::move(newBuffer1);//将备用缓冲区给前端，防止前端缓冲区阻塞
+            buffersToWrite.swap(buffers_);//交换缓冲区队列，减小临界区域
             if (!nextBuffer_)
             {
                 nextBuffer_ = std::move(newBuffer2);
@@ -117,7 +117,7 @@ void AsyncLogging::threadFunc()
 
         if (buffersToWrite.size() > 2)
         {
-            buffersToWrite.resize(2);
+            buffersToWrite.resize(2);//这种情况下最多只需要两块buffer，去填充newBuffer1和newBuffer2
         }
 
         if (!newBuffer1)

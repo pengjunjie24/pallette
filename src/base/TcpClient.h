@@ -18,6 +18,7 @@ namespace pallette
     class Connector;
     typedef std::shared_ptr<Connector> ConnectorPtr;
 
+    //Tcp客户端封装
     class TcpClient : noncopyable
     {
     public:

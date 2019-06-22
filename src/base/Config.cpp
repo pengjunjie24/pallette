@@ -9,7 +9,7 @@ Config::Config(std::string filename,
     , delimiter_(delimiter)
     , comment_(comment)
 {
-    // Construct a Config, getting keys and values from given file  
+    // Construct a Config, getting keys and values from given file
 
     std::ifstream in(filename_.c_str());
     if (!in)
@@ -26,7 +26,7 @@ Config::Config(std::string filename,
 
 bool Config::keyExists(const std::string& key) const
 {
-    // Indicate whether key is found  
+    // Indicate whether key is found
     Mapci p = contents_.find(key);
     return (p != contents_.end());
 }
@@ -34,7 +34,7 @@ bool Config::keyExists(const std::string& key) const
 /* static */
 void Config::Trim(std::string& inoutS)
 {
-    // remove leading and trailing whitespace  
+    // remove leading and trailing whitespace
     static const char whitespace[] = " \n\t\v\r\f";
     inoutS.erase(0, inoutS.find_first_not_of(whitespace));
     inoutS.erase(inoutS.find_last_not_of(whitespace) + 1U);
@@ -42,7 +42,7 @@ void Config::Trim(std::string& inoutS)
 
 void Config::remove(const std::string& key)
 {
-    // remove key and its value  
+    // remove key and its value
     contents_.erase(contents_.find(key));
 }
 
@@ -55,7 +55,7 @@ void Config::save()
 
 std::ostream& pallette::operator<<(std::ostream& os, const Config& cf)
 {
-    // Save a Config to os  
+    // Save a Config to os
     for (Config::Mapci p = cf.contents_.begin();
         p != cf.contents_.end(); ++p)
     {
@@ -67,22 +67,22 @@ std::ostream& pallette::operator<<(std::ostream& os, const Config& cf)
 
 std::istream& pallette::operator>>(std::istream& is, Config& cf)
 {
-    // Load a Config from is  
-    // read in keys and values, keeping internal whitespace  
+    // Load a Config from is
+    // read in keys and values, keeping internal whitespace
     typedef std::string::size_type pos;
-    const std::string& delim = cf.delimiter_;  // separator  
-    const std::string& comm = cf.comment_;    // comment  
-    const pos skip = delim.length();        // length of separator  
+    const std::string& delim = cf.delimiter_;  // separator
+    const std::string& comm = cf.comment_;    // comment
+    const pos skip = delim.length();        // length of separator
 
-    std::string nextline = "";  // might need to read ahead to see where value ends  
+    std::string nextline = "";  // might need to read ahead to see where value ends
 
     while (is || nextline.length() > 0)
     {
-        // read an entire line at a time  
+        // read an entire line at a time
         std::string line;
         if (nextline.length() > 0)
         {
-            line = nextline;  // we read ahead; use it now  
+            line = nextline;  // we read ahead; use it now
             nextline = "";
         }
         else
@@ -90,20 +90,20 @@ std::istream& pallette::operator>>(std::istream& is, Config& cf)
             std::getline(is, line);
         }
 
-        // Ignore comments  
+        // Ignore comments
         line = line.substr(0, line.find(comm));
 
-        // Parse the line if it contains a delimiter  
+        // Parse the line if it contains a delimiter
         pos delimPos = line.find(delim);
         if (delimPos < std::string::npos)
         {
-            // Extract the key  
+            // Extract the key
             std::string key = line.substr(0, delimPos);
             line.replace(0, delimPos + skip, "");
 
-            // See if value continues on the next line  
-            // Stop at blank line, next line with a key, end of stream,  
-            // or end of file sentry  
+            // See if value continues on the next line
+            // Stop at blank line, next line with a key, end of stream,
+            // or end of file sentry
             bool terminate = false;
             while (!terminate && is)
             {
@@ -125,10 +125,10 @@ std::istream& pallette::operator>>(std::istream& is, Config& cf)
                 terminate = false;
             }
 
-            // Store key and value  
+            // Store key and value
             Config::Trim(key);
             Config::Trim(line);
-            cf.contents_[key] = line;  // overwrites if key is repeated  
+            cf.contents_[key] = line;  // overwrites if key is repeated
         }
     }
 

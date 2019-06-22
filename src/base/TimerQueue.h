@@ -22,13 +22,15 @@ namespace pallette
     class Timer;
     class TimerId;
 
+    //TimerQueue的封装是为了让未到期的时间Timer有序的排列起来，
+    //能够根据当前时间找到已经到期的Timer也能高效的添加和删除Timer
     class TimerQueue : noncopyable
     {
     public:
         explicit TimerQueue(EventLoop* loop);
         ~TimerQueue();
 
-        TimerId addTimer(TimerCallback cb, Timestamp when, double interval);
+        TimerId addTimer(TimerCallback cb, Timestamp when, double interval);//通常在其他线程被调用
         void cancel(TimerId timerId);
 
     private:
@@ -36,6 +38,7 @@ namespace pallette
         typedef std::set<Entry> TimerSet;
         typedef std::list<Timer*> TimerList;
 
+        //服务器性能杀手之一就是锁竞争，以下成员函数只能在所属的IO线程调用
         void addTimerInLoop(Timer* timer);
         void cancelInLoop(TimerId timerId);
         void handleRead();

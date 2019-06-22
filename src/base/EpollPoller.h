@@ -21,8 +21,8 @@ namespace pallette
     class EventLoop;
     class Channel;
 
-	//EpollPoller是对IO多路复用的封装，它属于某个EventLoop,生命周期与EventLoop相同，所以使用时无需加锁
-	//EpollPoller并不拥有Channel，只是持有Channel的裸指针，因此Channel在析构前要将自己从Poller中删除
+    //EpollPoller是对IO多路复用的封装，它属于某个EventLoop,生命周期与EventLoop相同，所以使用时无需加锁
+    //EpollPoller并不拥有Channel，只是持有Channel的裸指针，因此Channel在析构前要将自己从Poller中删除
     class EpollPoller: noncopyable
     {
     public:
@@ -32,7 +32,7 @@ namespace pallette
         ~EpollPoller();
 
         Timestamp poll(int timeoutMs, ChannelList* activeChannels);//封装了epoll_wait函数
-        void updateChannel(Channel* channel);
+        void updateChannel(Channel* channel);//更新fd在epoll中的状态
         void removeChannel(Channel* channel);
         bool hasChannel(Channel* channel) const;
         void assertInLoopThread() const;
@@ -46,9 +46,9 @@ namespace pallette
         void update(int operation, Channel* channel);//封装epoll_ctl函数
 
         EventLoop* ownerLoop_;
-        int epollfd_;
-        EventList events_;
-        ChannelMap channels_;
+        int epollfd_;//epoll的句柄
+        EventList events_;//存放激活事件
+        ChannelMap channels_;//监听的channel
 
         static const int kInitEventListSize = 16;
     };

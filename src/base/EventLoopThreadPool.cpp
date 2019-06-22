@@ -35,7 +35,7 @@ void EventLoopThreadPool::start(const ThreadInitCallback& cb)
     {
         EventLoopThread* t = new EventLoopThread(cb);
         threads_.push_back(std::unique_ptr<EventLoopThread>(t));
-        loops_.push_back(t->startLoop());
+        loops_.push_back(t->startLoop());//启动EventLoopThread线程
     }
     if (numThreads_ == 0 && cb)
     {
@@ -45,9 +45,9 @@ void EventLoopThreadPool::start(const ThreadInitCallback& cb)
 
 EventLoop* EventLoopThreadPool::getNextLoop()
 {
-    baseLoop_->assertInLoopThread();
+    baseLoop_->assertInLoopThread();//只能在IO线程池对象所在IO线程拿到IO线程池中线程
     assert(started_);
-    EventLoop* loop = baseLoop_;
+    EventLoop* loop = baseLoop_;//当线程池中线程个数为0，返回IO线程池对象所在IO线程
 
     if (!loops_.empty())
     {

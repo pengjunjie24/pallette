@@ -19,8 +19,6 @@
 
 using namespace pallette;
 
-const char Buffer::kCRLF[] = "\r\n";
-
 Buffer::Buffer(size_t initialSize)
 :buffer_(kPrePrePend + initialSize),
 readIndex_(kPrePrePend),
@@ -333,7 +331,7 @@ const char* Buffer::findStr(std::string searchString, const char* start) const
     assert(peek() <= startPlace);
     assert(startPlace <= beginWrite());
 
-    const char* findStrPlace = static_cast<const char*>(memmem(startPlace, 
+    const char* findStrPlace = static_cast<const char*>(memmem(startPlace,
         beginWrite() - startPlace, searchString.c_str(), searchString.length()));
 
     return findStrPlace == beginWrite() ? NULL : findStrPlace;

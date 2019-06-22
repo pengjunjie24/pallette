@@ -21,6 +21,7 @@ namespace pallette
     class Channel;
     class EventLoop;
 
+    //Connector用于发起连接，并且带有自动重连功能
     class Connector : noncopyable,
         public std::enable_shared_from_this<Connector>
     {
@@ -35,9 +36,9 @@ namespace pallette
             newConnectionCallback_ = cb;
         }
 
-        void start();
-        void restart();
-        void stop();
+        void start();//任何线程都能调用
+        void restart();//当前线程调用
+        void stop();//任何线程都能调用
 
         const InetAddress& serverAddress() const { return serverAddr_; }
 
@@ -47,23 +48,23 @@ namespace pallette
         void setState(States s) { state_ = s; }
         void startInLoop();
         void stopInLoop();
-        void connect();
+        void connect();//实际调用connect函数
         void connecting(int sockfd);
         void handleWrite();
         void handleError();
-        void retry(int sockfd);
-        int removeAndResetChannel();
-        void resetChannel();
+        void retry(int sockfd);//重连函数
+        int removeAndResetChannel();//移除channel并且释放
+        void resetChannel();//释放channel
 
         EventLoop* loop_;
-        InetAddress serverAddr_;
+        InetAddress serverAddr_;//服务器地址
         std::atomic<bool> connect_;
-        std::atomic<States> state_;
+        std::atomic<States> state_;//当前连接所属状态，状态机
         std::unique_ptr<Channel> channel_;
-        NewConnectionCallback newConnectionCallback_;
-        int retryDelayMs_;
+        NewConnectionCallback newConnectionCallback_;//连接上后的用户回调
+        int retryDelayMs_;//重连时间
         bool retryConnector_;//是否有重连事件
-        TimerId retryConnectorTimerId_;
+        TimerId retryConnectorTimerId_;//控制定时器的句柄
 
         static const int kMaxRetryDelayMs = 30 * 1000;
         static const int kInitRetryDelayMs = 500;

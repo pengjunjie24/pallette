@@ -89,27 +89,27 @@ void Connector::connect()
     switch (savedErrno)
     {
     case 0:
-    case EINPROGRESS:
-    case EINTR:
-    case EISCONN:
+    case EINPROGRESS://连接建立中
+    case EINTR://系统调用的执行由于捕获中断而中止
+    case EISCONN://已经连接到该套接字
         connecting(sockfd);
         break;
 
-    case EAGAIN:
-    case EADDRINUSE:
+    case EAGAIN://没有足够空闲的本地端口
+    case EADDRINUSE://本地地址处于使用状态
     case EADDRNOTAVAIL:
-    case ECONNREFUSED:
-    case ENETUNREACH:
+    case ECONNREFUSED: //远程地址并没有处于监听状态
+    case ENETUNREACH: //网络不可到达
         retry(sockfd);
         break;
 
     case EACCES:
-    case EPERM:
-    case EAFNOSUPPORT:
-    case EALREADY:
-    case EBADF:
-    case EFAULT:
-    case ENOTSOCK:
+    case EPERM://在套接字广播标志没有设置的情况下连接广播地址或由于防火墙策略导致连接失败
+    case EAFNOSUPPORT://参数serv_add中的地址非合法地址
+    case EALREADY://套接字为非阻塞套接字，并且原来的连接请求还未完成
+    case EBADF://非法的文件描述符
+    case EFAULT://指向套接字结构体的地址非法
+    case ENOTSOCK://文件描述符不与套接字相关
         LOG_SYSERR << "connect error in Connector::startInLoop " << savedErrno;
         sockets::close(sockfd);
         break;
@@ -161,10 +161,10 @@ void Connector::handleWrite()
 {
     LOG_TRACE << "Connector::handleWrite " << state_;
 
-    if (state_ == kConnecting)
+    if (state_ == kConnecting)//连接建立后不用再关注channel中可写事件，使用channel_.reset析构掉
     {
         int sockfd = removeAndResetChannel();
-        int err = sockets::getSocketError(sockfd);
+        int err = sockets::getSocketError(sockfd);//socket可写不一定连接成功，还需要getsockopt()再次确认
         if (err)
         {
             LOG_WARN << "Connector::handleWrite - SO_ERROR = "
@@ -181,7 +181,7 @@ void Connector::handleWrite()
             setState(kConnected);
             if (connect_)
             {
-                newConnectionCallback_(sockfd);
+                newConnectionCallback_(sockfd);//连接成功后，调用用户回调
             }
             else
             {
@@ -216,7 +216,7 @@ void Connector::retry(int sockfd)
             << " in " << retryDelayMs_ << " milliseconds. ";
         retryConnectorTimerId_ = loop_->runAfter(retryDelayMs_ / 1000.0,
             std::bind(&Connector::startInLoop, shared_from_this()));
-        retryDelayMs_ = std::min(retryDelayMs_ * 2, kMaxRetryDelayMs);
+        retryDelayMs_ = std::min(retryDelayMs_ * 2, kMaxRetryDelayMs);//每次重连时间延长一倍
         retryConnector_ = true;
     }
     else

@@ -15,9 +15,11 @@
 
 namespace pallette
 {
+    //对套接字结构体sockaddr和socketaddr_in各种操作的封装，其中也包括ipv6
     class InetAddress
     {
     public:
+        //loopbackOnly表示绑定只能收到回环网卡请求，否则是能收到任何网卡的请求
         explicit InetAddress(uint16_t port = 0, bool loopbackOnly = false, bool ipv6 = false);
         InetAddress(std::string ip, uint16_t port, bool ipv6 = false);
         explicit InetAddress(const struct sockaddr_in& addr)

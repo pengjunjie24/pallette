@@ -34,4 +34,4 @@ namespace pallette
     void defaultMessageCallback(const TcpConnectionPtr& conn, Buffer* buffer, Timestamp receiveTime);
 }
 
-#endif 
+#endif

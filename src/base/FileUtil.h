@@ -15,13 +15,14 @@ namespace pallette
 {
     namespace file_util
     {
+        //对文件进行写入操作的类,非线程安全
         class AppendFile : noncopyable
         {
         public:
             explicit AppendFile(std::string filename);
             ~AppendFile();
             void append(const char* logline, const size_t len);
-            void flush();
+            void flush();//将用户缓冲数据刷到内核
 
             int writtenBytes() const { return writtenBytes_; }
 

@@ -24,6 +24,7 @@ namespace pallette
     class EventLoop;
     class Socket;
 
+    //Tcp建立连接后的通讯对象
     class TcpConnection : noncopyable,
         public std::enable_shared_from_this<TcpConnection>
     {
@@ -44,7 +45,7 @@ namespace pallette
         void send(const void* message, int len);
         void send(const std::string& message);
         void send(Buffer* message);
-        void shutdown();
+        void shutdown();//关闭连接调用shutdown而不调用close,避免数据丢失
         void forceClose();
         void forceCloseWithDelay(double seconds);
         void setTcpNoDelay(bool on);
@@ -80,8 +81,8 @@ namespace pallette
         Buffer* inputBuffer(){ return &inputBuffer_; }
         Buffer* outputBuffer(){ return &outputBuffer_; }
 
-        void connectEstablished();
-        void connectDestroyed();
+        void connectEstablished();//连接建立，在TcpServer中建立连接后调用该函数
+        void connectDestroyed();//连接断开，在TcpServer中移除连接时调用函数
 
         std::string creationTime() { return creationTime_.toFormatTedString(); }
         std::string lastReceiveTime() { return lastReceiveTime_.toFormatTedString(); }
@@ -89,7 +90,7 @@ namespace pallette
         uint64_t bytesSent() { return bytesSent_; }
 
     private:
-        enum StateE { kDisconnected, kConnecting, kConnected, kDisconnecting };
+        enum StateE { kDisconnected, kConnecting, kConnected, kDisconnecting };//类似于状态机,对Tcp连接的状态定义
         void handleRead(Timestamp receiveTime);
         void handleWrite();
         void handleClose();
@@ -109,15 +110,15 @@ namespace pallette
         bool reading_;
         std::unique_ptr<Socket> socket_;
         std::unique_ptr<Channel> channel_;
-        const InetAddress localAddr_;
-        const InetAddress peerAddr_;
+        const InetAddress localAddr_;//本地服务器信息
+        const InetAddress peerAddr_;//远端客户端信息
 
-        ConnectionCallback connectionCallback_;
+        ConnectionCallback connectionCallback_;//TcpConn连接和断开调用的回调,用于处理连接和断开事件
         MessageCallback messageCallback_;
         WriteCompleteCallback writeCompleteCallback_;
-        HighWaterMarkCallback highWaterMarkCallback_;
+        HighWaterMarkCallback highWaterMarkCallback_;//当发送缓冲区上限阀值过小，调用该函数
         CloseCallback closeCallback_;
-        size_t highWaterMark_;
+        size_t highWaterMark_;//发送缓冲区数据上限阀值
 
         Buffer inputBuffer_;
         Buffer outputBuffer_; // FIXME: use list<Buffer> as output buffer.

@@ -8,6 +8,7 @@
 #include <deque>
 namespace pallette
 {
+    //环形队列，底层数据结构为deque
     template <typename T>
     class RingBuffer : noncopyable
     {

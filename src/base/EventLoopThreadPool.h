@@ -19,6 +19,7 @@ namespace pallette
     class EventLoop;
     class EventLoopThread;
 
+    //IO线程池类，开启若干个IO线程，并让其处于事件循环
     class EventLoopThreadPool : noncopyable
     {
     public:
@@ -26,20 +27,20 @@ namespace pallette
 
         EventLoopThreadPool(EventLoop* baseLoop);
         ~EventLoopThreadPool();
-        void setThreadNum(int numThreads) { numThreads_ = numThreads; }
+        void setThreadNum(int numThreads) { numThreads_ = numThreads; }//设置sub线程数
         void start(const ThreadInitCallback& cb = ThreadInitCallback());
 
-        EventLoop* getNextLoop();
-        std::vector<EventLoop*> getAllLoops();
+        EventLoop* getNextLoop();//得到一个IO线程句柄
+        std::vector<EventLoop*> getAllLoops();//得到所有IO线程句柄
 
         bool started() const { return started_; }
 
     private:
-        EventLoop* baseLoop_;
+        EventLoop* baseLoop_;//IO线程池对象所属的IO线程
         bool started_;
-        int numThreads_;
+        int numThreads_;//sub线程数，除去了baseLoop_
         int next_;
-        std::vector<std::unique_ptr<EventLoopThread>> threads_;
+        std::vector<std::unique_ptr<EventLoopThread>> threads_;//存放IO线程
         std::vector<EventLoop*> loops_;
     };
 }

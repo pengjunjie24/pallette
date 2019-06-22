@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <endian.h>
 
+//封装大小端转换操作
 namespace pallette
 {
     namespace sockets

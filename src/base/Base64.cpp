@@ -137,7 +137,7 @@ bool Base64::base64Decode(const std::string& strIn, unsigned char *pOut,
 
         if (++y == 4)
         {
-            if ((z + g) > *uOutLen) 
+            if ((z + g) > *uOutLen)
             {
                 fprintf(stderr, "base64Decode: uOutLen is out of range: uOutLen = %lu", *uOutLen);
                 return false;

@@ -16,6 +16,7 @@ namespace pallette
 {
     class InetAddress;
 
+    //对socket套接字各项操作的封装
     class Socket : noncopyable
     {
     public:

@@ -16,6 +16,7 @@
 
 namespace pallette
 {
+    //时间戳类，返回的是UTC时间，以微妙为分辨率，最好通过值传递
     class Timestamp : public less_than_comparable<Timestamp>
         , public equality_comparable<Timestamp>
     {
@@ -40,7 +41,7 @@ namespace pallette
 
         std::string toString() const;
         std::string toFormatTedString(bool showMicroSeconds = true) const;
-        //默认东八区时区
+        //默认东八区时区 FIXME:需要修改
         static Timestamp now();
         static Timestamp invalid() { return Timestamp(); }
 

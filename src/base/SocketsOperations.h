@@ -10,6 +10,7 @@
 
 #include <arpa/inet.h>
 
+//对socket套接字相关操作的底层封装
 namespace pallette
 {
     namespace sockets
@@ -42,7 +43,7 @@ namespace pallette
 
         struct sockaddr_in6 getLocalAddr(int sockfd);
         struct sockaddr_in6 getPeerAddr(int sockfd);
-        bool isSelfConnect(int sockfd);
+        bool isSelfConnect(int sockfd);//Tcp自连接问题
     }
 }
 

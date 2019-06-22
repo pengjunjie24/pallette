@@ -88,8 +88,6 @@ namespace pallette
 
         static const size_t kPrePrePend = 8;//默认预留8个字节
         static const size_t kInitalSize = 1024;//初始大小
-
-        static const char kCRLF[];
     };
 }
 

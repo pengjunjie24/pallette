@@ -20,6 +20,7 @@
 
 namespace pallette
 {
+    //线程池类
     class ThreadPool : public noncopyable
     {
     public:
@@ -27,8 +28,8 @@ namespace pallette
         explicit ThreadPool(const std::string& nameArg = std::string("ThreadPool"));
         ~ThreadPool();
 
-        void setMaxQueueSize(int maxSize) { maxQueueSize_ = maxSize; }
-        void setThreadInitCallback(const task& cb) { threadInitCallback_ = cb; }
+        void setMaxQueueSize(int maxSize) { maxQueueSize_ = maxSize; }//设置任务对列大小
+        void setThreadInitCallback(const task& cb) { threadInitCallback_ = cb; }//设置线程池初始化函数
         const std::string& name() const { return name_; }
 
         void start(int);//启动固定数量线程的线程池
@@ -49,7 +50,7 @@ namespace pallette
         task threadInitCallback_;//线程池初始化任务
         std::vector<std::unique_ptr<std::thread>> threads_;//存放线程容器
         std::deque<task> queue_;//任务队列
-        size_t maxQueueSize_;//任务队列最大容量
+        size_t maxQueueSize_;//任务队列最大容量,超过最大容量则阻塞,为0则无上限
         bool running_;
     };
 }

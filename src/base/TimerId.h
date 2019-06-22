@@ -11,6 +11,8 @@
 namespace pallette
 {
     class Timer;
+
+    //定时器句柄，用于删除定时器
     class TimerId
     {
     public:

@@ -14,6 +14,7 @@ namespace pallette
     std::ostream& operator<<(std::ostream& os, const Config& cf);
     std::istream& operator>>(std::istream& is, Config& cf);
 
+    //简单的配置文件类
     class Config
     {
     public:
@@ -32,10 +33,10 @@ namespace pallette
 
         bool fileExist(std::string filename);
 
-        // Check whether key exists in configuration  
+        // Check whether key exists in configuration
         bool keyExists(const std::string& inKey) const;
 
-        // Modify keys and values  
+        // Modify keys and values
         template<class T> void add(const std::string& inKey, const T& inValue);
         void remove(const std::string& inKey);
 
@@ -43,7 +44,7 @@ namespace pallette
         void save();
         static void Trim(std::string& inoutS);
 
-        // Write or read configuration  
+        // Write or read configuration
         friend std::ostream& operator<<(std::ostream& os, const Config& cf);
         friend std::istream& operator >> (std::istream& is, Config& cf);
 
@@ -52,17 +53,17 @@ namespace pallette
         template<class T> static T string_as_T(const std::string& s);
 
         std::string filename_;
-        std::string delimiter_;  //!< separator between key and value  
-        std::string comment_;    //!< separator between value and comments  
-        std::map<std::string, std::string> contents_;  //!< extracted keys and values  
+        std::string delimiter_;  //!< separator between key and value
+        std::string comment_;    //!< separator between value and comments
+        std::map<std::string, std::string> contents_;  //!< extracted keys and values
     };
 
     /* static */
     template<class T>
     std::string Config::T_as_string(const T& t)
     {
-        // Convert from a T to a string  
-        // Type T must support << operator  
+        // Convert from a T to a string
+        // Type T must support << operator
         std::ostringstream ost;
         ost << t;
         return ost.str();
@@ -72,8 +73,8 @@ namespace pallette
     template<class T>
     T Config::string_as_T(const std::string& s)
     {
-        // Convert from a string to a T  
-        // Type T must support >> operator  
+        // Convert from a string to a T
+        // Type T must support >> operator
         T t;
         std::istringstream ist(s);
         ist >> t;
@@ -85,8 +86,8 @@ namespace pallette
     template<>
     inline std::string Config::string_as_T<std::string>(const std::string& s)
     {
-        // Convert from a string to a string  
-        // In other words, do nothing  
+        // Convert from a string to a string
+        // In other words, do nothing
         return s;
     }
 
@@ -95,13 +96,13 @@ namespace pallette
     template<>
     inline bool Config::string_as_T<bool>(const std::string& s)
     {
-        // Convert from a string to a bool  
-        // Interpret "false", "F", "no", "n", "0" as false  
-        // Interpret "true", "T", "yes", "y", "1", "-1", or anything else as true  
+        // Convert from a string to a bool
+        // Interpret "false", "F", "no", "n", "0" as false
+        // Interpret "true", "T", "yes", "y", "1", "-1", or anything else as true
         bool b = true;
         std::string sup = s;
         for (std::string::iterator p = sup.begin(); p != sup.end(); ++p)
-            *p = toupper(*p);  // make string all caps  
+            *p = toupper(*p);  // make string all caps
         if (sup == std::string("FALSE") || sup == std::string("F") ||
             sup == std::string("NO") || sup == std::string("N") ||
             sup == std::string("0") || sup == std::string("NONE"))
@@ -112,8 +113,8 @@ namespace pallette
     template<class T>
     T Config::read(const std::string& key, const T& value) const
     {
-        // Return the value corresponding to key or given default value  
-        // if key is not found  
+        // Return the value corresponding to key or given default value
+        // if key is not found
         Mapci p = contents_.find(key);
         if (p == contents_.end()) return value;
         return string_as_T<T>(p->second);
@@ -122,9 +123,9 @@ namespace pallette
     template<class T>
     bool Config::readInto(T& var, const std::string& key) const
     {
-        // Get the value corresponding to key and store in var  
-        // Return true if key is found  
-        // Otherwise leave var untouched  
+        // Get the value corresponding to key and store in var
+        // Return true if key is found
+        // Otherwise leave var untouched
         Mapci p = contents_.find(key);
         bool found = (p != contents_.end());
         if (found) var = string_as_T<T>(p->second);
@@ -134,9 +135,9 @@ namespace pallette
     template<class T>
     bool Config::readInto(T& var, const std::string& key, const T& value) const
     {
-        // Get the value corresponding to key and store in var  
-        // Return true if key is found  
-        // Otherwise set var to given default  
+        // Get the value corresponding to key and store in var
+        // Return true if key is found
+        // Otherwise set var to given default
         Mapci p = contents_.find(key);
         bool found = (p != contents_.end());
         if (found)
@@ -149,7 +150,7 @@ namespace pallette
     template<class T>
     void Config::add(const std::string& inKey, const T& value)
     {
-        // add a key with given value  
+        // add a key with given value
         std::string v = T_as_string(value);
         std::string key = inKey;
         Trim(key);
