@@ -80,11 +80,11 @@ namespace pallette
         self& operator<<(const unsigned char*);
         self& operator<< (const void* p);
         self& operator<<(const std::string&);
+        self& operator<<(const Buffer& v);
 
-        const Buffer& getBuffer() const
-        {
-            return buffer_;
-        }
+        void append(const char* data, int len) { buffer_.append(data, len); }
+        const Buffer& getBuffer() const { return buffer_; }
+
     private:
         template<typename T>
         void foramtInteger(T v);
@@ -93,6 +93,26 @@ namespace pallette
         const int kBufferLength_ = detail::kSmallBuffer;
         static const int kMaxNumberSize = 32;//整型转化为字符串的最大长度
     };
+
+    class Fmt//对snprintf()的封装
+    {
+    public:
+        template<typename T>
+        Fmt(const char* fmt, T val);
+
+        const char* data() const { return buf_; }
+        int length() const { return length_; }
+
+    private:
+        char buf_[32];
+        int length_;
+    };
+
+    inline LogStream& operator<<(LogStream& s, const Fmt& fmt)
+    {
+        s.append(fmt.data(), fmt.length());
+        return s;
+    }
 }
 
 #endif

@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
+#include <assert.h>
 
 namespace
 {
@@ -52,121 +53,149 @@ namespace
     }
 }
 
-namespace pallette
+using namespace pallette;
+
+template<typename T>
+void LogStream::foramtInteger(T value)
 {
-    template<typename T>
-    void LogStream::foramtInteger(T value)
+    if (buffer_.avail() > kMaxNumberSize)
     {
-        if (buffer_.avail() > kMaxNumberSize)
-        {
-            char buf[kMaxNumberSize] = { 0 };
-            char *ptr = convert(buf, value);
-            buffer_.append(ptr, strlen(ptr));
-        }
-    }
-
-    LogStream& LogStream::operator << (bool v)
-    {
-        buffer_.append((v ? "0" : "1"), 1);
-        return *this;
-    }
-
-    LogStream& LogStream::operator<<(short v)
-    {
-        foramtInteger(v);
-        return *this;
-    }
-    LogStream& LogStream::operator<<(unsigned short v)
-    {
-        foramtInteger(v);
-        return *this;
-    }
-    LogStream& LogStream::operator<<(int v)
-    {
-        foramtInteger(v);
-        return *this;
-    }
-    LogStream& LogStream::operator<<(unsigned int v)
-    {
-        foramtInteger(v);
-        return *this;
-    }
-    LogStream& LogStream::operator<<(long v)
-    {
-        foramtInteger(v);
-        return *this;
-    }
-    LogStream& LogStream::operator<<(unsigned long v)
-    {
-        foramtInteger(v);
-        return *this;
-    }
-    LogStream& LogStream::operator<<(long long v)
-    {
-        foramtInteger(v);
-        return *this;
-    }
-    LogStream& LogStream::operator<<(unsigned long long v)
-    {
-        foramtInteger(v);
-        return *this;
-    }
-
-    LogStream& LogStream::operator<<(float v)
-    {
-        *this << static_cast<double>(v);
-        return *this;
-    }
-    LogStream& LogStream::operator<<(double v)
-    {
-        if (buffer_.avail() >= kMaxNumberSize)
-        {
-            char buf[32] = { 0 };
-            //%.15g 最多打印15个数，超出部分截断
-            int len = snprintf(buf, sizeof(buf), "%.15g", v);
-            buffer_.append(buf, len);
-        }
-        return *this;
-    }
-    LogStream& LogStream::operator<<(char v)
-    {
-        buffer_.append(&v, 1);
-        return *this;
-    }
-    LogStream& LogStream::operator<<(const char* str)
-    {
-        if (str)
-        {
-            buffer_.append(str, strlen(str));
-        }
-        else
-        {
-            buffer_.append("(NULL)", 6);
-        }
-        return *this;
-    }
-    LogStream& LogStream::operator<<(const unsigned char* str)
-    {
-        *this << (reinterpret_cast<const char*>(str));
-        return *this;
-    }
-    LogStream& LogStream::operator<< (const void* p)
-    {
-        //提高程序可移植性，这种类型是为了void*提供的
-        uintptr_t v = reinterpret_cast<uintptr_t>(p);
-        if (buffer_.avail() > kMaxNumberSize)
-        {
-            buffer_.append("0x", strlen("0x"));
-
-            char buf[kMaxNumberSize] = { 0 };
-            char *ptr = convertHex(buf, v);
-            buffer_.append(ptr, strlen(ptr));
-        }
-        return *this;
-    }
-    LogStream& LogStream::operator<<(const std::string& v)
-    {
-        buffer_.append(v.c_str(), static_cast<int>(v.length()));
-        return *this;
+        char buf[kMaxNumberSize] = { 0 };
+        char *ptr = convert(buf, value);
+        buffer_.append(ptr, strlen(ptr));
     }
 }
+
+LogStream& LogStream::operator << (bool v)
+{
+    buffer_.append((v ? "0" : "1"), 1);
+    return *this;
+}
+
+LogStream& LogStream::operator<<(short v)
+{
+    foramtInteger(v);
+    return *this;
+}
+LogStream& LogStream::operator<<(unsigned short v)
+{
+    foramtInteger(v);
+    return *this;
+}
+LogStream& LogStream::operator<<(int v)
+{
+    foramtInteger(v);
+    return *this;
+}
+LogStream& LogStream::operator<<(unsigned int v)
+{
+    foramtInteger(v);
+    return *this;
+}
+LogStream& LogStream::operator<<(long v)
+{
+    foramtInteger(v);
+    return *this;
+}
+LogStream& LogStream::operator<<(unsigned long v)
+{
+    foramtInteger(v);
+    return *this;
+}
+LogStream& LogStream::operator<<(long long v)
+{
+    foramtInteger(v);
+    return *this;
+}
+LogStream& LogStream::operator<<(unsigned long long v)
+{
+    foramtInteger(v);
+    return *this;
+}
+
+LogStream& LogStream::operator<<(float v)
+{
+    *this << static_cast<double>(v);
+    return *this;
+}
+LogStream& LogStream::operator<<(double v)
+{
+    if (buffer_.avail() >= kMaxNumberSize)
+    {
+        char buf[32] = { 0 };
+        //%.15g 最多打印15个数，超出部分截断
+        int len = snprintf(buf, sizeof(buf), "%.15g", v);
+        buffer_.append(buf, len);
+    }
+    return *this;
+}
+LogStream& LogStream::operator<<(char v)
+{
+    buffer_.append(&v, 1);
+    return *this;
+}
+LogStream& LogStream::operator<<(const char* str)
+{
+    if (str)
+    {
+        buffer_.append(str, strlen(str));
+    }
+    else
+    {
+        buffer_.append("(NULL)", 6);
+    }
+    return *this;
+}
+LogStream& LogStream::operator<<(const unsigned char* str)
+{
+    *this << (reinterpret_cast<const char*>(str));
+    return *this;
+}
+LogStream& LogStream::operator<< (const void* p)
+{
+    //提高程序可移植性，这种类型是为了void*提供的
+    uintptr_t v = reinterpret_cast<uintptr_t>(p);
+    if (buffer_.avail() > kMaxNumberSize)
+    {
+        buffer_.append("0x", strlen("0x"));
+
+        char buf[kMaxNumberSize] = { 0 };
+        char *ptr = convertHex(buf, v);
+        buffer_.append(ptr, strlen(ptr));
+    }
+    return *this;
+}
+LogStream& LogStream::operator<<(const std::string& v)
+{
+    buffer_.append(v.c_str(), static_cast<int>(v.length()));
+    return *this;
+}
+
+LogStream& LogStream::operator<<(const Buffer& v)
+{
+    *this << v.getString();
+    return *this;
+}
+
+template<typename T>
+Fmt::Fmt(const char* fmt, T val)
+{
+    static_assert(std::is_arithmetic<T>::value == true, "Must be arithmetic type");
+
+    length_ = snprintf(buf_, sizeof buf_, fmt, val);
+    assert(static_cast<size_t>(length_) < sizeof buf_);
+}
+
+template Fmt::Fmt(const char* fmt, char);
+
+template Fmt::Fmt(const char* fmt, short);
+template Fmt::Fmt(const char* fmt, unsigned short);
+template Fmt::Fmt(const char* fmt, int);
+template Fmt::Fmt(const char* fmt, unsigned int);
+template Fmt::Fmt(const char* fmt, long);
+template Fmt::Fmt(const char* fmt, unsigned long);
+template Fmt::Fmt(const char* fmt, long long);
+template Fmt::Fmt(const char* fmt, unsigned long long);
+
+template Fmt::Fmt(const char* fmt, float);
+template Fmt::Fmt(const char* fmt, double);

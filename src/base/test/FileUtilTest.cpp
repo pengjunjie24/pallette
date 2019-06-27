@@ -9,20 +9,39 @@
 
 #include <stdio.h>
 #include <inttypes.h>
+#include <errno.h>
+#include <string.h>
 
-int main(int argc, char* argv[])
+using namespace pallette;
+
+//将testFileUtil文件中"  "变为" 0 "，最终并去掉" "，输出到文件testFileUtil2中
+void test()
 {
-    if (argc != 2)
+    std::string contents;
+    int errnum = file_util::readFile("testFileUtil", 1024 * 1024, &contents);
+    if (errnum != 0)
     {
-        printf("Usage: %s file\n", argv[0]);
-        return 1;
+        printf("err: %s", strerror(errnum));
+        return;
     }
-    std::string filename = argv[1];
-    std::string readContent = "";
-    int64_t size = 0;
-    int err = pallette::file_util::readFile("../Makefile", 10240, &readContent, &size);
-    printf("err = %d, Makefile size = %" PRIu64 "\n", err, size);
-    printf("%s\n", readContent.c_str());
 
-    return 0;
+    size_t place = 0;
+    while ((place = contents.find("  ")) != std::string::npos)
+    {
+        contents.insert(place + 1, 1, '0');
+    }
+
+    while (((place = contents.find(" ")) != std::string::npos))
+    {
+        contents.erase(place, 1);
+    }
+
+    file_util::AppendFile file2("testFileUtil2");
+    file2.append(contents.c_str(), contents.length());
+    file2.flush();
+}
+
+int main()
+{
+    test();
 }
