@@ -15,11 +15,12 @@ using namespace pallette;
 void HttpResponse::appendToBuffer(Buffer* output) const
 {
     char buf[32] = { 0 };
-    snprintf(buf, sizeof(buf), "HTTP/1.1 %d", statusCode_);
+    snprintf(buf, sizeof(buf), "HTTP/1.1 %d", statusCode_);//状态栏
     output->append(buf);
     output->append(statusMessage_);
     output->append("\r\n");
 
+    //添加header
     if (closeConnection_)
     {
         output->append("Connection: close\r\n");
@@ -40,5 +41,5 @@ void HttpResponse::appendToBuffer(Buffer* output) const
     }
 
     output->append("\r\n");
-    output->append(body_);
+    output->append(body_);//添加body
 }
