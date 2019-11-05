@@ -23,3 +23,22 @@ std::vector<std::string> utils::regexSplit(const std::string& in,
             std::sregex_token_iterator()
     };
 }
+
+void utils::stringFormat(std::string& formatText, const char* format, ...)
+{
+    size_t initSize = 100;
+    va_list args;
+
+    while (true)
+    {
+        formatText.resize(initSize);
+        va_start(args, format);
+        int n = vsnprintf((char *)formatText.c_str(), initSize, format, args);
+        if (n > -1 && n < (int)initSize)
+        {
+            formatText.resize(n);
+            break;
+        }
+        initSize = (n > -1) ? (n + 1) : (initSize * 2);
+    }
+}

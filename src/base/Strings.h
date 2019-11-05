@@ -20,6 +20,8 @@ namespace pallette
         //delim: 分割字符串的正则表达式
         std::vector<std::string> regexSplit(const std::string& in,
             const std::string& delim);
+
+        void stringFormat(std::string& formatText, const char* format, ...);
     }
 }
 
