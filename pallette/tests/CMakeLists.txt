@@ -1,0 +1,57 @@
+
+add_executable(SignalSlotTest SignalSlotTest.cpp)
+target_link_libraries(SignalSlotTest pallette_base)
+
+add_executable(SingletonTest SingletonTest.cpp)
+target_link_libraries(SingletonTest pallette_base)
+
+add_executable(StringsTest StringsTest.cpp)
+target_link_libraries(StringsTest pallette_base)
+
+add_executable(ThreadTest ThreadTest.cpp)
+target_link_libraries(ThreadTest pallette_base)
+
+add_executable(TimeZoneTest TimeZoneTest.cpp)
+target_link_libraries(TimeZoneTest pallette_base)
+
+add_executable(TimestampTest TimestampTest.cpp)
+target_link_libraries(TimestampTest pallette_base)
+
+add_executable(LogStreamTest LogStreamTest.cpp)
+target_link_libraries(LogStreamTest pallette_base)
+
+add_executable(FileUtilTest FileUtilTest.cpp)
+target_link_libraries(FileUtilTest pallette_base)
+
+add_executable(LogFileTest LogFileTest.cpp)
+target_link_libraries(LogFileTest pallette_base)
+
+add_executable(LoggingTest LoggingTest.cpp)
+target_link_libraries(LoggingTest pallette_base)
+
+add_executable(AsyncLoggingTest AsyncLoggingTest.cpp)
+target_link_libraries(AsyncLoggingTest pallette_base)
+
+add_executable(EventLoopTest EventLoopTest.cpp)
+target_link_libraries(EventLoopTest pallette_base)
+
+add_executable(ChannelTest ChannelTest.cpp)
+target_link_libraries(ChannelTest pallette_base)
+
+add_executable(TimerQueueTest TimerQueueTest.cpp)
+target_link_libraries(TimerQueueTest pallette_base)
+
+add_executable(EventLoopThreadTest EventLoopThreadTest.cpp)
+target_link_libraries(EventLoopThreadTest pallette_base)
+
+add_executable(EventLoopThreadPoolTest EventLoopThreadPoolTest.cpp)
+target_link_libraries(EventLoopThreadPoolTest pallette_base)
+
+add_executable(BufferTest BufferTest.cpp)
+target_link_libraries(BufferTest pallette_base)
+
+add_executable(EchoClientTest EchoClientTest.cpp)
+target_link_libraries(EchoClientTest pallette_base)
+
+add_executable(EchoServerTest EchoServerTest.cpp)
+target_link_libraries(EchoServerTest pallette_base)
