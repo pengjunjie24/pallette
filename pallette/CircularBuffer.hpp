@@ -14,8 +14,7 @@ namespace pallette
     {
     public:
         explicit CircularBuffer(int maxSize)
-            : maxSize_(size)
-            , buffer_(0)
+            : maxSize_(maxSize)
         {
             assert(maxSize_ > 0);
         }
@@ -25,11 +24,11 @@ namespace pallette
         T& front() { return buffer_.front(); }
         T& back() { return buffer_.back(); }
         bool empty()const { return size() == 0; }
-        bool full()const { return size() == maxSize_; }
+        bool full()const { return size() == static_cast<size_t>(maxSize_); }
 
         void push_back(const T& value)
         {
-            if (buffer_.size() < maxSize_)
+            if (buffer_.size() < static_cast<size_t>(maxSize_))
             {
                 buffer_.push_back(value);
             }
@@ -42,7 +41,7 @@ namespace pallette
 
         void push_front(const T& value)
         {
-            if (buffer_.size() < maxSize_)
+            if (buffer_.size() < static_cast<size_t>(maxSize_))
             {
                 buffer_.push_front(value);
             }
@@ -57,7 +56,7 @@ namespace pallette
         void pop_front() { buffer_.pop_front(); }
 
     private:
-        size_t maxSize_;//环形队列最大个数
+        const int maxSize_;//环形队列最大个数
         std::deque<T> buffer_;
     };
 }

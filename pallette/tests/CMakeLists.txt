@@ -2,6 +2,9 @@
 add_executable(SignalSlotTest SignalSlotTest.cpp)
 target_link_libraries(SignalSlotTest pallette_base)
 
+add_executable(ExceptionTest ExceptionTest.cpp)
+target_link_libraries(ExceptionTest pallette_base)
+
 add_executable(SingletonTest SingletonTest.cpp)
 target_link_libraries(SingletonTest pallette_base)
 
@@ -55,3 +58,6 @@ target_link_libraries(EchoClientTest pallette_base)
 
 add_executable(EchoServerTest EchoServerTest.cpp)
 target_link_libraries(EchoServerTest pallette_base)
+
+add_executable(ObjectPoolTest ObjectPoolTest.cpp)
+target_link_libraries(ObjectPoolTest pallette_base)

@@ -42,3 +42,4 @@ include_directories(
 )
 
 add_subdirectory(pallette)
+add_subdirectory(examples)

@@ -1,0 +1,2 @@
+add_executable(EchoServerMain EchoServer.cpp EchoServerMain.cpp)
+target_link_libraries(EchoServerMain pallette_base)
