@@ -19,6 +19,6 @@ void Timer::restart(Timestamp now)
     }
     else
     {
-        expiration_ = Timestamp();
+        expiration_ = Timestamp::invalid();
     }
 }
