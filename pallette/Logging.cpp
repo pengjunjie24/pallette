@@ -91,7 +91,6 @@ Logger::Logger(const char* file, int line, ENUM_LOGLEVEL level, const char* func
         << " [" << current_thread::tid() << "] " << basename_ << " " << func_ << " "
         << line_ << ": {";
 
-    const LogStream::Buffer& buf(logBuffer_.getBuffer());
     if (systemError && saveError != 0)
     {
         logBuffer_ << " (errno=" << saveError << "  " << strerror_rl(saveError) << ") ";

@@ -6,11 +6,10 @@
 #include <vector>
 #include <functional>
 #include <mutex>
-
-#include <iostream>
 #include <atomic>
 
 #include <assert.h>
+#include <stdio.h>
 
 //对象池，性能较低
 namespace pallette
@@ -77,7 +76,8 @@ namespace pallette
                 }
                 else
                 {
-                    throw std::logic_error("no more object");
+                    fprintf(stderr, "no more object");
+                    return NULL;
                 }
             }
 

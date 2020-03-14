@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
     printf("pid = %d\n", getpid());
 
     char name[256];
-    strncpy(name, argv[0], 256);
+    strncpy(name, argv[0], sizeof(name));
     pallette::AsyncLogging log(::basename(name), kRollSize);
     log.start();
     g_asyncLog = &log;
