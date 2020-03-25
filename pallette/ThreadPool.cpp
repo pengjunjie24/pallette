@@ -6,6 +6,7 @@
 ************************************************************************/
 
 #include <pallette/ThreadPool.h>
+#include <pallette/Exception.h>
 
 #include <exception>
 #include <stdio.h>
@@ -108,6 +109,13 @@ void ThreadPool::runInThread()
                 threadTask();
             }
         }
+    }
+    catch (const Exception& ex)
+    {
+        fprintf(stderr, "exception caught in ThreadPool %s\n", name_.c_str());
+        fprintf(stderr, "reason: %s\n", ex.what());
+        fprintf(stderr, "stack trace: %s\n", ex.stackTrace());
+        abort();
     }
     catch (const std::exception& ex)
     {

@@ -1,6 +1,7 @@
 
 #include <pallette/Thread.h>
 #include <pallette/CurrentThread.h>
+#include <pallette/Exception.h>
 
 #include <assert.h>
 #include <stdio.h>
@@ -55,6 +56,21 @@ namespace pallette
                 {
                     func_();
                     current_thread::tThreadName = "finished";
+                }
+                catch (const Exception& ex)
+                {
+                    current_thread::tThreadName = "crashed";
+                    fprintf(stderr, "exception caught in Thread %s\n", name_.c_str());
+                    fprintf(stderr, "reason: %s\n", ex.what());
+                    fprintf(stderr, "stack trace: %s\n", ex.stackTrace());
+                    abort();
+                }
+                catch (const std::exception& ex)
+                {
+                    current_thread::tThreadName = "crashed";
+                    fprintf(stderr, "exception caught in Thread %s\n", name_.c_str());
+                    fprintf(stderr, "reason: %s\n", ex.what());
+                    abort();
                 }
                 catch (...)
                 {
