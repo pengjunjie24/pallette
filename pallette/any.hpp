@@ -16,7 +16,7 @@ namespace pallette
         any(const ValueType& value) : content(new holder<ValueType>(value))
         {
         }
-        any(const any & other)
+        any(const any& other)
             : content(other.content ? other.content->clone() : 0)
         {
         }
@@ -27,19 +27,19 @@ namespace pallette
         }
 
     public: // modifiers
-        any & swap(any & rhs)
+        any& swap(any& rhs)
         {
             std::swap(content, rhs.content);
             return *this;
         }
         template<typename ValueType>
-        any & operator=(const ValueType & rhs)
+        any& operator=(const ValueType& rhs)
         {
             any(rhs).swap(*this);
             return *this;
         }
 
-        any & operator=(any rhs)
+        any& operator=(any rhs)
         {
             any(rhs).swap(*this);
             return *this;
@@ -56,7 +56,7 @@ namespace pallette
             any().swap(*this);
         }
 
-        const std::type_info & type() const
+        const std::type_info& type() const
         {
             return content ? content->type() : typeid(void);
         }
@@ -68,8 +68,8 @@ namespace pallette
             {
             }
         public: // queries
-            virtual const std::type_info & type() const = 0;
-            virtual placeholder * clone() const = 0;
+            virtual const std::type_info& type() const = 0;
+            virtual placeholder* clone() const = 0;
         };
     public:
         template<typename ValueType>
@@ -84,14 +84,14 @@ namespace pallette
                 return typeid(ValueType);
             }
 
-            virtual placeholder * clone() const
+            virtual placeholder* clone() const
             {
                 return new holder(held);
             }
         public: // representation
             ValueType held;
         private: // intentionally left unimplemented
-            holder & operator=(const holder &);
+            holder& operator=(const holder&);
         };
         placeholder* content;
     };
@@ -101,7 +101,7 @@ namespace pallette
         lhs.swap(rhs);
     }
 
-    class  bad_any_cast : public std::bad_cast
+    class bad_any_cast : public std::bad_cast
     {
     public:
         virtual const char* what() const throw()
@@ -110,15 +110,25 @@ namespace pallette
         }
     };
 
-    template<typename ValueType>
-    ValueType * any_cast(any * operand)
+    template <typename ValueType>
+    bool any_is(const any& value)
     {
-        return operand && operand->type() == typeid(ValueType)
-            ? &static_cast<any::holder<ValueType> *>(operand->content)->held : 0;
+        return value.type() == typeid(ValueType);
     }
 
     template<typename ValueType>
-    inline const ValueType * any_cast(const any * operand)
+    ValueType* any_cast(any* operand)
+    {
+        if (operand && any_is<ValueType>(*operand))
+        {
+            return &static_cast<any::holder<ValueType> *>(operand->content)->held;
+        }
+
+        throw bad_any_cast();
+    }
+
+    template<typename ValueType>
+    inline const ValueType* any_cast(const any* operand)
     {
         return any_cast<ValueType>(const_cast<any *>(operand));
     }
@@ -126,12 +136,18 @@ namespace pallette
     template<typename ValueType>
     ValueType any_cast(any& value)
     {
-        return static_cast<any::holder<ValueType>*>(value.content)->held;
+        if (any_is<ValueType>(value))
+        {
+            return static_cast<any::holder<ValueType>*>(value.content)->held;
+        }
+
+        throw bad_any_cast();
     }
+
     template<typename ValueType>
     ValueType any_cast(const any& value)
     {
-        return any_cast<ValueType>(const_cast<any &>(value));
+        return any_cast<ValueType>(const_cast<any&>(value));
     }
 }
 #endif

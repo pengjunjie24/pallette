@@ -61,3 +61,6 @@ target_link_libraries(EchoServerTest pallette_base)
 
 add_executable(ObjectPoolTest ObjectPoolTest.cpp)
 target_link_libraries(ObjectPoolTest pallette_base)
+
+add_executable(AnyTest AnyTest.cpp)
+target_link_libraries(AnyTest pallette_base)
