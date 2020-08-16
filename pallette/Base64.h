@@ -1,51 +1,35 @@
-/*************************************************************************
-  > File Name: Base64.h
-  > Author: pengjunjie
-  > Mail: 1002398145@qq.com
-  > Created Time: 2019年06月07日 星期五 11时09分13秒
- ************************************************************************/
+//
+//  base64 encoding and decoding with C++.
+//  Version: 2.rc.04 (release candidate)
+//
 
-#ifndef PALLETTE_BASE64_H
-#define PALLETTE_BASE64_H
+#ifndef BASE64_H_C0CE2A47_D10E_42C9_A27C_C883944E704A
+#define BASE64_H_C0CE2A47_D10E_42C9_A27C_C883944E704A
 
 #include <string>
 
-namespace pallette
-{
-    class Base64
-    {
-    public:
+#if __cplusplus >= 201703L
+#include <string_view>
+#endif  // __cplusplus >= 201703L
 
-        //函数说明：将输入数据进行base64编码
-        //参数说明：[in]pIn 需要进行编码的数据
-        //[in]uInLen 输入参数的字节数
-        //[out]strOut 输出的进行base64编码之后的字符串
-        //返回值  ：true处理成功,false失败
-        static bool base64Encode(const unsigned char *pIn, unsigned long uInLen, std::string& strOut);
+std::string base64_encode     (std::string const& s, bool url = false);
+std::string base64_encode_pem (std::string const& s);
+std::string base64_encode_mime(std::string const& s);
 
-        //函数说明：将输入数据进行base64解码
-        //参数说明：[in]strIn 需要进行解码的数据
-        //[out]strOut 输出的进行base64解码之后的字符串
-        //返回值: true处理成功,false失败
-        static bool base64Decode(const std::string& strIn, std::string& strOut);
+std::string base64_decode(std::string const& s, bool remove_linebreaks = false);
+std::string base64_encode(unsigned char const*, size_t len, bool url = false);
 
-    private:
+#if __cplusplus >= 201703L
+//
+// Interface with std::string_view rather than const std::string&
+// Requires C++17
+// Provided by Yannic Bonenberger (https://github.com/Yannic)
+//
+std::string base64_encode     (std::string_view s, bool url = false);
+std::string base64_encode_pem (std::string_view s);
+std::string base64_encode_mime(std::string_view s);
 
-        //函数说明：将输入数据进行base64编码
-        //参数说明：[in]pIn需要进行编码的数据
-        //[in]uInLen输入参数的字节数
-        //[out]pOut输出的进行base64编码之后的字符串
-        //[out]uOutLen输出的进行base64编码之后的字符串长度
-        //返回值：true处理成功,false失败
-        static bool base64Encode(const unsigned char *pIn, unsigned long uInLen, unsigned char *pOut, unsigned long *uOutLen);
+std::string base64_decode(std::string_view s, bool remove_linebreaks = false);
+#endif  // __cplusplus >= 201703L
 
-        //函数说明：将输入数据进行base64解码
-        //参数说明：[in]strIn 需要进行解码的数据
-        //[out]pOut 输出解码之后的节数数据
-        //[out]uOutLen 输出的解码之后的字节数长度
-        //返回值: true处理成功,false失败
-        static bool base64Decode(const std::string& strIn, unsigned char *pOut, unsigned long *uOutLen);
-    };
-}
-
-#endif
+#endif /* BASE64_H_C0CE2A47_D10E_42C9_A27C_C883944E704A */

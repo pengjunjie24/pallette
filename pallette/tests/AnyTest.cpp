@@ -1,95 +1,361 @@
-
-#include <iostream>
-#include <string>
-#include <vector>
+#pragma once
 
 #include <pallette/any.hpp>
 
-using namespace pallette;
-void testany1()
+#include <memory>
+#include <string>
+#include <cstdlib>
+#include <cstdio>
+#if defined(ANY_IMPL_NO_EXCEPTIONS) && defined(_MSC_VER)
+# include <excpt.h>
+#endif
+
+#ifdef WIN32
+#ifdef test_lib_EXPORTS
+#define TESTLIB_API __declspec(dllexport)
+#else
+#define TESTLIB_API __declspec(dllimport)
+#endif
+#else
+#define TESTLIB_API
+#endif
+
+#define CHECK(x) ((x)? (void)(0) : (void(fprintf(stdout, "Failed at %d:%s: %s\n", __LINE__, __FILE__, #x)), std::exit(EXIT_FAILURE)))
+
+
+namespace shared_test_lib {
+    struct TESTLIB_API big_data final {
+        explicit big_data()
+            :a(10), b(11), data()
+        {}
+
+        double a;
+        float b;
+        int data[1024];
+    };
+
+    struct TESTLIB_API small_data final {
+        explicit small_data()
+            : i(1)
+        {}
+
+        int i;
+    };
+
+    TESTLIB_API pallette::any createBigData()
+    {
+        return big_data{};
+    }
+
+    TESTLIB_API pallette::any createSmallData()
+    {
+        return small_data{};
+    }
+
+} // namespace shared_test_lib
+
+
+
+template<size_t N>
+struct words
 {
-    any anyA1(123);
-    int a2 = any_cast<int>(anyA1);
-    int* pA2 = any_cast<int>(&anyA1);
-    std::cout << "a2 = " << a2 << " *pA2=" << *pA2 << std::endl;
-
-    any anyB1(12.35);
-    double b2 = any_cast<double>(anyB1);
-    std::cout << "b2= " << b2 << std::endl;
-
-    any anyStr(std::string("abc"));
-    std::string msg = any_cast<std::string>(anyStr);
-    std::cout << "msg= " << msg << std::endl;
-
-    std::vector<float> values, newValues;
-    for (int idx = 0; idx < 10; idx++)
-    {
-        values.push_back(0.5 + idx + 10);
-    }
-    any anyVector(values);
-    newValues = any_cast<std::vector<float>>(anyVector);
-    auto iter = newValues.begin();
-    while (newValues.end() != iter)
-    {
-        std::cout << *iter << " ";
-        ++iter;
-    }
-    std::cout << std::endl;
-
-    any anyEmpty;
-    if (anyEmpty.empty())
-    {
-        std::cout << "anyEmpty is empty" << std::endl;
-    }
-
-    anyEmpty = any(3);
-    if (!anyEmpty.empty())
-    {
-        std::cout << "anyEmpty is not empty" << std::endl;
-    }
-}
-
-
-//分包消息结构体
-struct SubContract
-{
-    bool isSubPackage;                            //是否分包
-    uint16_t sumPackage;                           //消息总包数
-    uint16_t currentPackage;                       //当前包数
+    void* w[N];
 };
 
-//位置信息汇报报基础信息
-struct BaseLocationMessage
+struct big_type
 {
-    uint32_t longitude;                             //纬度
-    uint32_t latitude;                              //经度
-    uint16_t altitude;                              //海拔高度
-    char time[6];                                   //时间
+    char i_wanna_be_big[256];
+    std::string value;
+
+    big_type() :
+        value(std::string(300, 'b'))
+    {
+        i_wanna_be_big[0] = i_wanna_be_big[50] = 'k';
+    }
+
+    bool check()
+    {
+        CHECK(value.size() == 300);
+        CHECK(value.front() == 'b' && value.back() == 'b');
+        CHECK(i_wanna_be_big[0] == 'k' && i_wanna_be_big[50] == 'k');
+        return true;
+    }
 };
-void testany2()
+
+// small type which has nothrow move ctor but throw copy ctor
+struct regression1_type
 {
-    SubContract content;
-    content.isSubPackage = true;
-    content.sumPackage = 12;
-    content.currentPackage = 4;
-
-    any testContent(content);
-
-    if (testContent.type() == typeid(SubContract))
-    {
-        SubContract content2 = any_cast<SubContract>(testContent);
-        std::cout << "content2.isSubPackage:" << content2.isSubPackage << std::endl;
-        std::cout << "content2.sumPackage:" << content2.sumPackage << std::endl;
-        std::cout << "content2.currentPackage" << content2.currentPackage << std::endl;
-    }
-    if (testContent.type() == typeid(BaseLocationMessage))
-    {
-        std::cout << "testContent.type() == typeid(BaseLocationMessage)" << std::endl;
-    }
-}
+    const void* confuse_stack_storage = (void*)(0);
+    regression1_type() {}
+    regression1_type(const regression1_type&) {}
+    regression1_type(regression1_type&&) noexcept {}
+    regression1_type& operator=(const regression1_type&) { return *this; }
+    regression1_type& operator=(regression1_type&&) { return *this; }
+};
 
 int main()
 {
-    testany1();
-    //testany2();
+    using pallette::any;
+    using pallette::any_cast;
+    using pallette::bad_any_cast;
+
+    {
+        any x = 4;
+        any y = big_type();
+        any z = 6;
+
+        CHECK(any().empty());
+        CHECK(!any(1).empty());
+        CHECK(!any(big_type()).empty());
+
+        CHECK(!x.empty() && !y.empty() && !z.empty());
+        y.clear();
+        CHECK(!x.empty() && y.empty() && !z.empty());
+        x = y;
+        CHECK(x.empty() && y.empty() && !z.empty());
+        z = any();
+        CHECK(x.empty() && y.empty() && z.empty());
+    }
+
+#ifndef ANY_IMPL_NO_RTTI
+    {
+        CHECK(any().type() == typeid(void));
+        CHECK(any(4).type() == typeid(int));
+        CHECK(any(big_type()).type() == typeid(big_type));
+        CHECK(any(1.5f).type() == typeid(float));
+    }
+#endif
+
+    {
+        bool except0 = false;
+        bool except1 = false, except2 = false;
+        bool except3 = false, except4 = false;
+
+#ifndef ANY_IMPL_NO_EXCEPTIONS
+        try {
+            any_cast<int>(any());
+        }
+        catch (const bad_any_cast&) {
+            except0 = true;
+        }
+
+        try {
+            any_cast<int>(any(4.0f));
+        }
+        catch (const bad_any_cast&) {
+            except1 = true;
+        }
+
+        try {
+            any_cast<float>(any(4.0f));
+        }
+        catch (const bad_any_cast&) {
+            except2 = true;
+        }
+
+        try {
+            any_cast<float>(any(big_type()));
+        }
+        catch (const bad_any_cast&) {
+            except3 = true;
+        }
+
+        try {
+            any_cast<big_type>(any(big_type()));
+        }
+        catch (const bad_any_cast&) {
+            except4 = true;
+        }
+#elif _MSC_VER
+        // we can test segmentation faults with msvc
+
+# ifdef _CPPUNWIND
+#   error Must use msvc compiler with exceptions disabled (no /EHa, /EHsc, /EHs)
+# endif
+
+        __try {
+            any_cast<int>(any());
+        }
+        __except (EXCEPTION_EXECUTE_HANDLER) {
+            except0 = true;
+        }
+        __try {
+            any_cast<int>(any(4.0f));
+        }
+        __except (EXCEPTION_EXECUTE_HANDLER) {
+            except1 = true;
+        }
+        __try {
+            any_cast<float>(any(4.0f));
+        }
+        __except (EXCEPTION_EXECUTE_HANDLER) {
+            except2 = true;
+        }
+        __try {
+            any_cast<float>(any(big_type()));
+        }
+        __except (EXCEPTION_EXECUTE_HANDLER) {
+            except3 = true;
+        }
+        __try {
+            any_cast<big_type>(any(big_type()));
+        }
+        __except (EXCEPTION_EXECUTE_HANDLER) {
+            except4 = true;
+        }
+#endif
+
+        CHECK(except0 == true);
+        CHECK(except1 == true && except2 == false);
+        CHECK(except3 == true && except4 == false);
+    }
+
+    {
+        any i4 = 4;
+        any i5 = 5;
+        any f6 = 6.0f;
+        any big1 = big_type();
+        any big2 = big_type();
+        any big3 = big_type();
+
+        CHECK(any_cast<int>(&i4) != nullptr);
+        CHECK(any_cast<float>(&i4) == nullptr);
+        CHECK(any_cast<int>(i5) == 5);
+        CHECK(any_cast<float>(f6) == 6.0f);
+        CHECK(any_cast<big_type>(big1).check()
+            && any_cast<big_type>(big2).check()
+            && any_cast<big_type>(big3).check());
+    }
+
+    {
+        std::shared_ptr<int> ptr_count(new int);
+        std::weak_ptr<int> weak = ptr_count;
+        any p0 = 0;
+
+        CHECK(weak.use_count() == 1);
+        any p1 = ptr_count;
+        CHECK(weak.use_count() == 2);
+        any p2 = p1;
+        CHECK(weak.use_count() == 3);
+        p0 = p1;
+        CHECK(weak.use_count() == 4);
+        p0 = 0;
+        CHECK(weak.use_count() == 3);
+        p0 = std::move(p1);
+        CHECK(weak.use_count() == 3);
+        p0.swap(p1);
+        CHECK(weak.use_count() == 3);
+        p0 = 0;
+        CHECK(weak.use_count() == 3);
+        p1.clear();
+        CHECK(weak.use_count() == 2);
+        p2 = any(big_type());
+        CHECK(weak.use_count() == 1);
+        p1 = ptr_count;
+        CHECK(weak.use_count() == 2);
+        ptr_count = nullptr;
+        CHECK(weak.use_count() == 1);
+        p1 = any();
+        CHECK(weak.use_count() == 0);
+    }
+
+    {
+        auto is_stack_allocated = [](const any& a, const void* obj1) {
+            uintptr_t a_ptr = (uintptr_t)(&a);
+            uintptr_t obj = (uintptr_t)(obj1);
+            return (obj >= a_ptr && obj < a_ptr + sizeof(any));
+        };
+
+        //static_assert(sizeof(std::unique_ptr<big_type>) <= sizeof(void*) * 1, "unique_ptr too big");
+        static_assert(sizeof(std::shared_ptr<big_type>) <= sizeof(void*) * 2, "shared_ptr too big");
+
+        any i = 400;
+        any f = 400.0f;
+        //any unique = std::unique_ptr<big_type>(); -- must be copy constructible
+        any shared = std::shared_ptr<big_type>();
+        any rawptr = (void*)(nullptr);
+        any big = big_type();
+        any w2 = words<2>();
+        any w3 = words<3>();
+
+        CHECK(is_stack_allocated(i, any_cast<int>(&i)));
+        CHECK(is_stack_allocated(f, any_cast<float>(&f)));
+        CHECK(is_stack_allocated(rawptr, any_cast<void*>(&rawptr)));
+        //CHECK(is_stack_allocated(unique, any_cast<std::unique_ptr<big_type>>(&unique)));
+        CHECK(is_stack_allocated(shared, any_cast<std::shared_ptr<big_type>>(&shared)));
+        CHECK(!is_stack_allocated(big, any_cast<big_type>(&big)));
+        CHECK(is_stack_allocated(w2, any_cast<words<2>>(&w2)));
+        CHECK(!is_stack_allocated(w3, any_cast<words<3>>(&w3)));
+
+        // Regression test for GitHub Issue #1
+        any r1 = regression1_type();
+        CHECK(is_stack_allocated(r1, any_cast<const regression1_type>(&r1)));
+    }
+
+    // correctly stored decayed and retrieved in decayed form
+    {
+        const int i = 42;
+        any a = i;
+
+        // retrieve
+        CHECK(any_cast<int>(&a) != nullptr);
+        CHECK(any_cast<const int>(&a) != nullptr);
+
+
+#ifndef ANY_IMPL_NO_EXCEPTIONS
+        // must not throw
+        bool except1 = false, except2 = false, except3 = false;
+
+        // same with reference to any
+        try {
+            any_cast<int>(a);
+        }
+        catch (const bad_any_cast&) {
+            except1 = true;
+        }
+        try {
+            any_cast<const int>(a);
+        }
+        catch (const bad_any_cast&) {
+            except2 = true;
+        }
+        try {
+            any_cast<const int>(std::move(a));
+        }
+        catch (const bad_any_cast&) {
+            except3 = true;
+        }
+
+        CHECK(except1 == false);
+        CHECK(except2 == false);
+        CHECK(except3 == false);
+#endif
+    }
+
+    {
+        bool except1 = false, except2 = false;
+        auto big_any = shared_test_lib::createBigData();
+        auto small_any = shared_test_lib::createSmallData();
+        try {
+            any_cast<shared_test_lib::big_data>(big_any);
+        }
+        catch (const bad_any_cast &) {
+            except1 = true;
+        }
+        try {
+            any_cast<shared_test_lib::small_data>(small_any);
+        }
+        catch (const bad_any_cast &) {
+            except2 = true;
+        }
+
+#ifndef ANY_IMPL_NO_RTTI
+        CHECK(except1 == false);
+        CHECK(except2 == false);
+#else
+        CHECK(except1 == true);
+        CHECK(except2 == true);
+#endif
+
+    }
 }

@@ -64,3 +64,6 @@ target_link_libraries(ObjectPoolTest pallette_base)
 
 add_executable(AnyTest AnyTest.cpp)
 target_link_libraries(AnyTest pallette_base)
+
+add_executable(Base64Test Base64Test.cpp)
+target_link_libraries(Base64Test pallette_base)
