@@ -14,6 +14,7 @@
 #include <pallette/CurrentThread.h>
 #include <pallette/TimerId.h>
 #include <pallette/Callbacks.h>
+#include <pallette/StatElapseTime.h>
 
 #include<atomic>
 #include <memory>
@@ -44,6 +45,8 @@ namespace pallette
 
         Timestamp pollReturnTime() const { return pollReturnTime_; }
         int64_t iteration() const { return iteration_; }
+        int64_t curloopElapseTimeus() const { return elapsedTimeus_.getElapsedTimeus(); }
+        int64_t maxloopElapseTimeus() const { return elapsedTimeus_.getMaxElapsedTimeus(); }
 
         void runInLoop(Functor cb);//让EventLoop在其owner线程执行cb函数
         void queueInLoop(Functor cb);
@@ -82,6 +85,7 @@ namespace pallette
         int64_t iteration_;
         const size_t threadId_;
         Timestamp pollReturnTime_;
+        StatElapsedTimeus elapsedTimeus_;//统计函数执行耗时时长
         std::unique_ptr<EpollPoller> poller_;//多路复用IO,用指针是因为只有对EpollPoller的前向声明
         std::unique_ptr<TimerQueue> timerQueue_;
         int wakeupFd_;//eventfd，用来唤醒本线程的文件描述符

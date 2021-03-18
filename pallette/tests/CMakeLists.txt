@@ -67,3 +67,6 @@ target_link_libraries(AnyTest pallette_base)
 
 add_executable(Base64Test Base64Test.cpp)
 target_link_libraries(Base64Test pallette_base)
+
+add_executable(StatElapseTimeTest StatElapseTimeTest.cpp)
+target_link_libraries(StatElapseTimeTest pallette_base)

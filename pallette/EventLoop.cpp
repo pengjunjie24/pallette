@@ -255,7 +255,7 @@ void EventLoop::doPendingFunctors()
 
     for (size_t i = 0; i < functors.size(); ++i)
     {
-        functors[i]();
+        elapsedTimeus_.execStatElapsedTime(functors[i]);
     }
     callingPendingFunctors_ = false;
 }
